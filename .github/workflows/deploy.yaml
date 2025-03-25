@@ -30,3 +30,4 @@ jobs:
             cd /var/www/html
             git pull
             systemctl restart apache2
+            EOF
