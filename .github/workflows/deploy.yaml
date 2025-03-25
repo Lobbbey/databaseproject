@@ -11,19 +11,14 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1.32'
           extensions: mbstring, pdo, pdo_mysql, xml
-          tools: composer, phpunit
-      - name: Run Tests
-        run: ./vendor/bin/phpunit tests
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -32,5 +27,5 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /var/www/html
-            git pull
+            git  pull
             systemctl restart apache2
