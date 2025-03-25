@@ -20,12 +20,11 @@ jobs:
           php-version: '8.1.32'
           extensions: mbstring, pdo, pdo_mysql, xml
       - name: Deploy via SSHPass
-        uses: appleboy/ssh-action@v0.1.10
-        with:
+        env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-          script: |
+        run: |
             sshpass -p "${SSH_KEY}" ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} << 'EOF'
             cd /var/www/html
             git pull
