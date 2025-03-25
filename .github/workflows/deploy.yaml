@@ -22,13 +22,8 @@ jobs:
           php-version: '8.1.32'
           extensions: mbstring, pdo, pdo_mysql, xml
           tools: composer, phpunit
-
-      - name: Install Dependencies
-        run: composer install --no-dev --prefer-dist --no-progress
-
       - name: Run Tests
         run: ./vendor/bin/phpunit tests
-
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -38,5 +33,4 @@ jobs:
           script: |
             cd /var/www/html
             git pull
-            composer install --no-dev --prefer-dist --no-progress
-    
+            systemctl restart apache2
