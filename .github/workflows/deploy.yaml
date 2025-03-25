@@ -28,5 +28,5 @@ jobs:
           script: |
             sshpass -p "${SSH_KEY}" ssh -o StrictHostKeyChecking=no ${SSH_USERNAME}@${SSH_HOST} << 'EOF'
             cd /var/www/html
-            git  pull
+            git pull
             systemctl restart apache2
