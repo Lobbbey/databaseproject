@@ -1,33 +1,37 @@
 <!DOCTYPE HTML>
 
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="description" content="An Event Managing Website">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/src/output.css" />
-        <script type="text/javascript" src="js/code.js"></script>
-    </head>
 
-    <body>
-        <!-- Temp for signing up -->
-        <div class="container">
-            <h1>Create Account</h1>
-            <input type="text" id="firstName" placeholder="First Name" required />
-            <input type="text" id="lastName" placeholder="Last Name" required />
-            <input type="username" id="signUpUsername" placeholder="Username" required />
-            <input type="password" id="signUpPassword" placeholder="Password" required />
+<head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="An Event Managing Website">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/output.css" />
+    <script type="text/javascript" src="js/code.js"></script>
+</head>
+
+<body>
+    <div class="grid grid-cols-6 gap-1 ">
+        <div class="">
+            <h1 class="text-2xl">Create Account</h1>
+            <input type="text" id="firstName" placeholder="First Name" required /><br />
+            <input type="text" id="lastName" placeholder="Last Name" required /><br />
+            <input type="username" id="signUpEmail" placeholder="Email" required /><br />
+            <input type="password" id="signUpPassword" placeholder="Password" required /><br />
             <button type="submit">Sign Up</button>
             <span id="signupRes"></span>
         </div>
 
         <!-- Temp for loging in -->
-        <div class="container">
-            <h1>Login</h1>
-            <input type="username" id="signUpUsername" placeholder="Username" required />
-            <input type="password" id="signUpPassword" placeholder="Password" required />
+        <div class="right-0 top-0">
+            <h1 class="text-2xl">Login</h1>
+            <input type="email" id="loginEmail" placeholder="Email" required /><br />
+            <input type="password" id="loginPassword" placeholder="Password" required /><br />
             <button type="submit">Login</button>
             <span id="loginRes"></span>
         </div>
-    </body>
+    </div>
+
+</body>
+
 </html>

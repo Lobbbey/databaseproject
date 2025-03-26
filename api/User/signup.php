@@ -7,7 +7,7 @@
     $password = $inData["password"];
 
     //FIX THIS WITH ACCURATE DATA
-    $conn = new mysqli("localhost", "root", "test", "");
+    $conn = new mysqli("localhost", "root", "test", "EventManagement");
     if($conn->connect_error){
         returnWithError("error: Could not connect to database");
     }
