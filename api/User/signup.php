@@ -1,12 +1,10 @@
 <?php
     //Variables taken from js file
     $inData = getRequestInfo();
-    $firstName = $inData["firstName"];
-    $lastName = $inData["lastName"];
+    $Name = $inData["firstName"];
     $userName = $inData["userName"];
     $password = $inData["password"];
 
-    //FIX THIS WITH ACCURATE DATA
     $conn = new mysqli("localhost", "root", "test", "EventManagement");
     if($conn->connect_error){
         returnWithError("error: Could not connect to database");

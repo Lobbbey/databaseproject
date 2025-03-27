@@ -8,8 +8,7 @@ function logout(){
 }
 
 function signUp(){
-    let firstName = document.getElementById("firstName").value;
-    let lastName = document.getElementById("lastName").value;
+    let name = document.getElementById("name").value;
     let email = document.getElementById("signUpEmail").value;
     let password = document.getElementById("signUpPassword").value;
     document.getElementById("signupRes").innerHTML = "";
