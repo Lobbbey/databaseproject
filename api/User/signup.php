@@ -1,11 +1,11 @@
 <?php
     //Variables taken from js file
     $inData = getRequestInfo();
-    $Name = $inData["firstName"];
-    $userName = $inData["userName"];
+    $Name = $inData["Name"];
+    $Email = $inData["Email"];
     $password = $inData["password"];
 
-    $conn = new mysqli("localhost", "root", "test", "EventManagement");
+    $conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
     if($conn->connect_error){
         returnWithError("error: Could not connect to database");
     }
@@ -21,7 +21,7 @@
         }
         else{
             //Insert user into database
-            $stmt = $conn->prepare("INSERT INTO Users (FirstName, LastName, Username, Password) Values (?,?,?,?)");
+            $stmt = $conn->prepare("INSERT INTO Users (Name, Email, Password) Values (?,?,?)");
             $stmt->bind_param("ssss", $firstName, $lastName, $userName, $password);
             $stmt->execute();
             sendResultInfoAsJson('{"result":"Finished Successfully"}');
