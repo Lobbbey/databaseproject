@@ -2,6 +2,7 @@
     //Variables taken from js file
     $inData = getRequestInfo();
     $Name = $inData["Name"];
+    $Usertype = $inData["Usertype"]
     $Email = $inData["Email"];
     $password = $inData["password"];
 
@@ -11,8 +12,8 @@
     }
     else{
         //Returns if username already exists in database
-        $stmt = $conn->prepare("SLECET * FROM Users WHERE Username=?");
-        $stmt->bind_param("s", $userName);
+        $stmt = $conn->prepare("SELECET * FROM Users WHERE Username=?");
+        $stmt->bind_param("s", $Email);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -21,7 +22,7 @@
         }
         else{
             //Insert user into database
-            $stmt = $conn->prepare("INSERT INTO Users (Name, Email, Password) Values (?,?,?)");
+            $stmt = $conn->prepare("INSERT INTO Users (Name, Usertype, Email, Password) Values (?,?,?,?)");
             $stmt->bind_param("ssss", $firstName, $lastName, $userName, $password);
             $stmt->execute();
             sendResultInfoAsJson('{"result":"Finished Successfully"}');
