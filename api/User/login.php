@@ -4,7 +4,7 @@
     $Email = $inData["Email"];
     $password = $inData["Password"];
 
-    $conn = new mysqli("localhost", "superRoot", "DataBase", "EventManagement");
+    $conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
     if($conn->connect_error){
         returnWithError("error: Could not connect to database");
     }
