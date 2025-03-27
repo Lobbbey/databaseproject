@@ -4,7 +4,7 @@
     $Email = $inData["Email"];
     $password = $inData["Password"];
 
-    $conn = new mysqli("localhost", "root", "test", "EventManagement");
+    $conn = new mysqli("localhost", "superRoot", "DataBase", "EventManagement");
     if($conn->connect_error){
         returnWithError("error: Could not connect to database");
     }
@@ -25,27 +25,14 @@
         $conn->close();
     }
 
-
-    function returnWithError($err){
-        $retVal = '{"result":"' . $err . '"}';
-        sendResultInfoAsJson($retVal);
-    }
-
-    function sendResultInfoAsJson($obj){
-        header('Content-type: application/json');
-        echo $obj;
-    }
-
     //Returns JSON object
-	function sendResultInfoAsJson( $obj )
-	{
+	function sendResultInfoAsJson( $obj ){
 		header('Content-type: application/json');
 		echo $obj;
 	}
 	
 	//Returns JSON error message
-	function returnWithError( $err )
-	{
+	function returnWithError( $err ){
 		$retValue = '{"id":0, "result":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
