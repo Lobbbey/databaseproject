@@ -23,7 +23,7 @@
         else{
             //Insert user into database
             $stmt = $conn->prepare("INSERT INTO Users (Name, Usertype, Email, Password) Values (?,?,?,?)");
-            $stmt->bind_param("ssss", $firstName, $lastName, $userName, $password);
+            $stmt->bind_param("ssss", $Name, $Usertype, $Email, $password);
             $stmt->execute();
             sendResultInfoAsJson('{"result":"Finished Successfully"}');
         }
