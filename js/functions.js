@@ -35,7 +35,7 @@ function login() {
                 userType = jsonObject.UserType;
                 uniID = jsonObject.University_ID;
                 saveCookie();
-                if (userType) {
+                if (userType == "SuperAdmin") {
                     window.location.href = "SuperAdmin.html";
                 }
                 else if (userType == "Admin") {
@@ -91,7 +91,7 @@ function signUp() {
                 userType = jsonObject.UserType;
                 uniID = jsonObject.University_ID;
                 saveCookie();
-                if (userType) {
+                if (userType == SuperAdmin) {
                     window.location.href = "SuperAdmin.html";
                 }
                 else if (userType == "Admin") {
@@ -113,7 +113,7 @@ function saveCookie(){
     let minutes = 20;
     let date = new Date();
     date.setTime(date.getTime() + (minutes * 60 * 1000));
-    document.cookie = "Name=" + Name + ",userID=" + userID + ",UniversityID=" + uniID + ",userType=" + userType + ";expires=" + date.toGMTString();
+    document.cookie = "Name=" + userName + ",userID=" + userID + ",UniversityID=" + uniID + ",userType=" + userType + ";expires=" + date.toGMTString();
 }
 
 function readCookie() {
