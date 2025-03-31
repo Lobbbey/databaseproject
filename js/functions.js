@@ -70,7 +70,7 @@ function signUp() {
 
     let tmp = { Name: name, Email: email, Password: password, UserType: usertype };
     let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + 'User/signup.' + extension;
+    let url = urlBase + '/User/signup.' + extension;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);

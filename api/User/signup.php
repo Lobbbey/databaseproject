@@ -2,9 +2,9 @@
     //Variables taken from js file
     $inData = getRequestInfo();
     $Name = $inData["Name"];
-    $Usertype = $inData["Usertype"]
     $Email = $inData["Email"];
     $password = $inData["password"];
+    $Usertype = $inData["Usertype"];
 
     $conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
     if($conn->connect_error){
@@ -12,7 +12,7 @@
     }
     else{
         //Returns if username already exists in database
-        $stmt = $conn->prepare("SELECET * FROM Users WHERE Username=?");
+        $stmt = $conn->prepare("SELECET * FROM Users WHERE Email=?");
         $stmt->bind_param("s", $Email);
         $stmt->execute();
         $result = $stmt->get_result();
