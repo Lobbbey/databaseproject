@@ -33,7 +33,7 @@
 	
 	//Returns JSON error message
 	function returnWithError( $err ){
-		$retValue = '{"id":0, "result":"' . $err . '"}';
+		$retValue = '{"UID":0, "result":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
