@@ -3,7 +3,7 @@
     $inData = getRequestInfo();
     $Name = $inData["Name"];
     $Email = $inData["Email"];
-    $password = $inData["password"];
+    $Password = $inData["Password"];
     $Usertype = $inData["Usertype"];
 
     $conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
@@ -12,7 +12,7 @@
     }
     else{
         //Returns if username already exists in database
-        $stmt = $conn->prepare("SELECET * FROM Users WHERE Email=?");
+        $stmt = $conn->prepare("SELECT * FROM Users WHERE Email=?");
         $stmt->bind_param("s", $Email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -23,7 +23,7 @@
         else{
             //Insert user into database
             $stmt = $conn->prepare("INSERT INTO Users (Name, Email, Password, UserType) Values (?,?,?,?)");
-            $stmt->bind_param("ssss", $Name, $Email, $password, $Usertype);
+            $stmt->bind_param("ssss", $Name, $Email, $Password, $Usertype);
             $stmt->execute();
             sendResultInfoAsJson('{"result":"Finished Successfully"}');
         }
