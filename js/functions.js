@@ -91,7 +91,7 @@ function signUp() {
                 userType = jsonObject.UserType;
                 uniID = jsonObject.University_ID;
                 saveCookie();
-                if (userType == SuperAdmin) {
+                if (userType == "SuperAdmin") {
                     window.location.href = "SuperAdmin.html";
                 }
                 else if (userType == "Admin") {
