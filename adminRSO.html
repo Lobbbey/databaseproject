@@ -1,15 +1,247 @@
-
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="description" content="Admin Page">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/src/output.css" />
-        <script type="text/javascript" src="js/functions.js"></script>
-    </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="RSO Management Page - College Event Website" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="/src/output.css" />
+  
+  <!-- Collegiate Fonts (Google Fonts) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  
+  <script type="text/javascript" src="js/functions.js"></script>
+  <title>RSO Management - College Events</title>
+  
+  <style>
+    /* Base color palette */
+    :root {
+      --color-light-bg:  #e7eed0;
+      --color-card-bg:   #cad1c3;
+      --color-border:    #948e99;
+      --color-button:    #51425f;
+      --color-header:    #2e1437;
+    }
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--color-light-bg);
+      color: var(--color-header);
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Cinzel', serif;
+      color: var(--color-header);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    /* Header styling */
+    header {
+      background-color: var(--color-header);
+      padding: 1.5rem 0;
+    }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    .header-title {
+      font-size: 3rem;
+      color: #fff;
+    }
+    .header-subtitle {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-top: 0.5rem;
+    }
+    /* Main container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    /* Card styling */
+    .card {
+      background-color: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .card h3 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    /* Form elements */
+    .form-input, .form-select, .form-textarea {
+      background-color: #fff;
+      border: 1px solid var(--color-border);
+      color: var(--color-header);
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      width: 90%;
+      display: block;
+      margin: 0 auto 1rem auto;
+    }
+    .btn {
+      background-color: var(--color-button);
+      color: #fff;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 66.67%;
+      margin: 0 auto;
+      display: block;
+    }
+    .btn:hover {
+      background-color: var(--color-border);
+    }
+    /* Grid layout for cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    /* Card buttons styling */
+    .card-buttons {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .card-buttons .btn {
+      margin: 0 0.25rem;
+      width: auto;
+      padding: 0.5rem 1rem;
+      display: inline-block;
+    }
+    /* Filter dropdown */
+    .filter-dropdown {
+      max-width: 300px;
+      margin: 0 auto 2rem auto;
+      display: block;
+    }
+    /* Logout Button CSS */
+     .logout-btn {
+    background-color: #51425f; /* Primary button color */
+    color: #fff;               /* White text */
+    padding: 0.5rem 1rem;       /* Vertical & horizontal padding */
+    border: none;              /* No border */
+    border-radius: 0.25rem;     /* Slightly rounded corners */
+    cursor: pointer;           /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+    }
 
-    <body>
-
-    </body>
+    .logout-btn:hover {
+    background-color: #948e99; /* Hover state color */
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Navbar -->
+  <header>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <div class="header-container">
+      <h1 class="header-title">College Events</h1>
+      <h2 class="header-subtitle">RSO Management</h2>
+    </div>
+  </header>
+  
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Hero Section -->
+    <section style="text-align: center; margin-bottom: 2rem;">
+      <h2 class="text-3xl">Manage Your RSOs</h2>
+      <p class="text-lg" style="max-width: 600px; margin: 0 auto;">
+        Create new RSOs, manage existing ones, and filter by university affiliation.
+      </p>
+    </section>
+    
+    <!-- (Optional) Filter Dropdown for RSOs by University -->
+    <section style="text-align: center; margin-bottom: 2rem;">
+      <select id="universityFilter" class="form-select filter-dropdown">
+        <option value="all">All Universities</option>
+        <option value="uni1">University of Example</option>
+        <option value="uni2">Example State University</option>
+        <!-- Add more options as needed -->
+      </select>
+    </section>
+    
+    <!-- Create New RSO Form -->
+    <section class="card" style="max-width: 600px; margin: 0 auto 2rem auto;">
+      <h3 class="text-2xl">Create New RSO</h3>
+      <form>
+        <input type="text" id="rsoName" placeholder="RSO Name" required class="form-input">
+        <textarea id="rsoDescription" placeholder="RSO Description" rows="3" required class="form-textarea"></textarea>
+        <!-- Optionally, include a dropdown if RSO admins manage multiple universities -->
+        <!--
+        <select id="rsoUniversity" class="form-select">
+          <option value="uni1">University of Example</option>
+          <option value="uni2">Example State University</option>
+        </select>
+        -->
+        <button type="button" onclick="createRSO()" class="btn font-semibold">Create RSO</button>
+      </form>
+    </section>
+    
+    <!-- Existing RSOs List -->
+    <section>
+      <h2 class="text-3xl">Existing RSOs</h2>
+      <div class="grid">
+        <!-- RSO Card 1 -->
+        <div class="card">
+          <h3>Chess Club</h3>
+          <div>
+            <p><strong>Description:</strong> A club for chess enthusiasts to compete and improve strategy.</p>
+            <p><strong>Members:</strong> 12</p>
+            <p><strong>University:</strong> University of Example</p>
+          </div>
+          <div class="card-buttons">
+            <button class="btn" onclick="viewRSOMembers('Chess Club')">View Members</button>
+            <button class="btn" onclick="editRSO('Chess Club')">Edit</button>
+            <button class="btn" onclick="deleteRSO('Chess Club')">Delete</button>
+          </div>
+        </div>
+        <!-- RSO Card 2 -->
+        <div class="card">
+          <h3>Robotics Team</h3>
+          <div>
+            <p><strong>Description:</strong> Design, build, and program robots for competitions.</p>
+            <p><strong>Members:</strong> 18</p>
+            <p><strong>University:</strong> Example State University</p>
+          </div>
+          <div class="card-buttons">
+            <button class="btn" onclick="viewRSOMembers('Robotics Team')">View Members</button>
+            <button class="btn" onclick="editRSO('Robotics Team')">Edit</button>
+            <button class="btn" onclick="deleteRSO('Robotics Team')">Delete</button>
+          </div>
+        </div>
+        <!-- RSO Card 3 -->
+        <div class="card">
+          <h3>Debate Society</h3>
+          <div>
+            <p><strong>Description:</strong> Engage in spirited debates and refine public speaking skills.</p>
+            <p><strong>Members:</strong> 15</p>
+            <p><strong>University:</strong> University of Example</p>
+          </div>
+          <div class="card-buttons">
+            <button class="btn" onclick="viewRSOMembers('Debate Society')">View Members</button>
+            <button class="btn" onclick="editRSO('Debate Society')">Edit</button>
+            <button class="btn" onclick="deleteRSO('Debate Society')">Delete</button>
+          </div>
+        </div>
+        <!-- Additional RSO cards can be added here -->
+      </div>
+    </section>
+  </main>
+</body>
 </html>

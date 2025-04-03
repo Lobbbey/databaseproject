@@ -2,22 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content="Student Page - College Event Website" />
+  <meta name="description" content="Student Dashboard - College Event Website" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  
   <!-- Tailwind CSS -->
   <link rel="stylesheet" href="/src/output.css" />
-
+  
   <!-- Collegiate Fonts (Google Fonts) -->
-  <link 
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap" 
-    rel="stylesheet" 
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap"
+    rel="stylesheet"
   />
-
+  
   <script type="text/javascript" src="js/functions.js"></script>
   <title>Student Dashboard - College Events</title>
-
-  <!-- Custom CSS for Color Palette & Styling -->
+  
   <style>
     /* Base color palette */
     :root {
@@ -34,158 +33,173 @@
       margin: 0;
       padding: 0;
     }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Cinzel', serif;
+      color: var(--color-header);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
     /* Header styling */
     header {
       background-color: var(--color-header);
+      padding: 1.5rem 0;
     }
     .header-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 1.5rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      padding: 0 1rem;
+      text-align: center;
     }
     .header-title {
-      color: white;
-      font-family: 'Cinzel', serif;
-      font-size: 2.5rem;
-      margin: 0;
+      font-size: 3rem;
+      color: #fff;
     }
-    .logout-btn {
-      background-color: var(--color-button);
-      color: white;
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 0.25rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    .header-subtitle {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-top: 0.5rem;
     }
-    .logout-btn:hover {
-      background-color: var(--color-border);
-    }
-    /* Container for page content */
+    /* Main container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
     }
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .hero h2 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-    .hero p {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    /* Grid Layout for Event Cards */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-top: 1.5rem;
-    }
-    /* Event Card Styling */
+    /* Event Card styling */
     .event-card {
       background-color: var(--color-card-bg);
       border: 1px solid var(--color-border);
       border-radius: 0.5rem;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
       padding: 1.5rem;
+      margin-bottom: 2rem;
     }
     .event-card h3 {
+      text-align: center;
       margin-top: 0;
       margin-bottom: 1rem;
-      text-align: center;
     }
     .event-details p {
       margin: 0.25rem 0;
+    }
+    .event-type {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    /* Buttons for event interaction */
+    .btn {
+      background-color: var(--color-button);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+      margin: 0.25rem;
+    }
+    .btn:hover {
+      background-color: var(--color-border);
+    }
+    /* Grid layout for event cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }    
+    /* Logout Button CSS */
+    .logout-btn {
+    background-color: #51425f; /* Primary button color */
+    color: #fff;               /* White text */
+    padding: 0.5rem 1rem;       /* Vertical & horizontal padding */
+    border: none;              /* No border */
+    border-radius: 0.25rem;     /* Slightly rounded corners */
+    cursor: pointer;           /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+    }
+
+    .logout-btn:hover {
+    background-color: #948e99; /* Hover state color */
     }
   </style>
 </head>
 <body>
   <!-- Header / Navbar -->
   <header>
+    <button class="logout-btn" onclick="logout()">Logout</button>
     <div class="header-container">
       <h1 class="header-title">College Events</h1>
-      <button class="logout-btn" onclick="logout()">Logout</button>
+      <h2 class="header-subtitle">Student Dashboard</h2>
     </div>
   </header>
-
+  
   <!-- Main Content -->
   <main class="container">
     <!-- Hero Section -->
-    <section class="hero">
-      <h2>Welcome to your student dashboard, [Student Name]!</h2>
-      <p>
-        Here you can view all public events, private university events, and RSO events.
+    <section style="text-align: center; margin-bottom: 2rem;">
+      <h2 class="text-3xl">Welcome, [Student Name]</h2>
+      <p class="text-lg" style="max-width: 600px; margin: 0 auto;">
+        View public events, private university events, and RSO events. Rate, comment, and join the conversation.
       </p>
     </section>
-
+    
+    
     <!-- Events Grid -->
     <section>
-      <h2 style="text-align: center;">Your Events</h2>
+      <h2 class="text-3xl">Upcoming Events</h2>
       <div class="grid">
         <!-- Event Card 1 -->
         <div class="event-card">
           <h3>Tech Talk: Future of AI</h3>
+          <div class="event-type">Public Event</div>
           <div class="event-details">
             <p><strong>Date:</strong> April 10, 2025</p>
-            <p><strong>Time:</strong> 3:00 PM - 5:00 PM</p>
+            <p><strong>Start:</strong> 3:00 PM</p>
+            <p><strong>End:</strong> 4:00 PM</p>
             <p><strong>Location:</strong> Engineering Building Room 101</p>
-            <p><strong>Category:</strong> Tech Talk</p>
           </div>
           <p>A discussion on the future implications of artificial intelligence in our daily lives.</p>
+          <div style="text-align: center; margin-top: 1rem;">
+            <button class="btn" onclick="rateEvent('Tech Talk')">Rate</button>
+            <button class="btn" onclick="commentEvent('Tech Talk')">Comment</button>
+          </div>
         </div>
         <!-- Event Card 2 -->
         <div class="event-card">
           <h3>Fundraiser: Charity Run</h3>
+          <div class="event-type">RSO Event</div>
           <div class="event-details">
             <p><strong>Date:</strong> April 15, 2025</p>
-            <p><strong>Time:</strong> 9:00 AM - 12:00 PM</p>
+            <p><strong>Start:</strong> 9:00 AM</p>
+            <p><strong>End:</strong> 10:00 AM</p>
             <p><strong>Location:</strong> Campus Grounds</p>
-            <p><strong>Category:</strong> Fundraising</p>
           </div>
           <p>Join us for a charity run to support local nonprofits. Lace-up and make a difference!</p>
+          <div style="text-align: center; margin-top: 1rem;">
+            <button class="btn" onclick="rateEvent('Charity Run')">Rate</button>
+            <button class="btn" onclick="commentEvent('Charity Run')">Comment</button>
+          </div>
         </div>
         <!-- Event Card 3 -->
         <div class="event-card">
           <h3>Social Mixer</h3>
+          <div class="event-type">Private Event</div>
           <div class="event-details">
             <p><strong>Date:</strong> April 20, 2025</p>
-            <p><strong>Time:</strong> 6:00 PM - 9:00 PM</p>
+            <p><strong>Start:</strong> 6:00 PM</p>
+            <p><strong>End:</strong> 8:00 PM</p>
             <p><strong>Location:</strong> Student Union Lounge</p>
-            <p><strong>Category:</strong> Social</p>
           </div>
           <p>Come meet new people and network with your peers at our social mixer!</p>
-        </div>
-        <!-- Event Card 4 -->
-        <div class="event-card">
-          <h3>Workshop: Resume Building</h3>
-          <div class="event-details">
-            <p><strong>Date:</strong> April 22, 2025</p>
-            <p><strong>Time:</strong> 1:00 PM - 3:00 PM</p>
-            <p><strong>Location:</strong> Career Center Room 5</p>
-            <p><strong>Category:</strong> Workshop</p>
+          <div style="text-align: center; margin-top: 1rem;">
+            <button class="btn" onclick="rateEvent('Social Mixer')">Rate</button>
+            <button class="btn" onclick="commentEvent('Social Mixer')">Comment</button>
           </div>
-          <p>Learn how to build a professional resume that stands out to potential employers.</p>
         </div>
-        <!-- Event Card 5 -->
-        <div class="event-card">
-          <h3>Art Exhibition</h3>
-          <div class="event-details">
-            <p><strong>Date:</strong> April 25, 2025</p>
-            <p><strong>Time:</strong> 10:00 AM - 4:00 PM</p>
-            <p><strong>Location:</strong> Art Gallery</p>
-            <p><strong>Category:</strong> Cultural</p>
-          </div>
-          <p>Explore the latest art pieces created by student artists in our annual exhibition.</p>
-        </div>
+        <!-- Additional event cards can be added here -->
       </div>
     </section>
   </main>

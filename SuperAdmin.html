@@ -1,14 +1,229 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="description" content="Super Admin Page">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/src/output.css" />
-        <script type="text/javascript" src="js/functions.js"></script>
-    </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Super Admin Page - College Event Website" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="/src/output.css" />
 
-    <body>
+  <!-- Collegiate Fonts (Google Fonts) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <script type="text/javascript" src="js/functions.js"></script>
+  <title>Super Admin Dashboard - College Events</title>
+  
+  <style>
+    /* Base color palette */
+    :root {
+      --color-light-bg:  #e7eed0;
+      --color-card-bg:   #cad1c3;
+      --color-border:    #948e99;
+      --color-button:    #51425f;
+      --color-header:    #2e1437;
+    }
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--color-light-bg);
+      color: var(--color-header);
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Cinzel', serif;
+      color: var(--color-header);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    /* Header styling */
+    header {
+      background-color: var(--color-header);
+      padding: 1.5rem 0;
+    }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header-title {
+      font-size: 3rem;
+      color: #fff;
+    }
+    .header-subtitle {
+      font-size: 1.5rem;
+      color: #fff;
+      margin-top: 0.5rem;
+    }
+    /* Main container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    /* Card styling */
+    .card {
+      background-color: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .card h3 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    /* Form elements */
+    .form-input, .form-select, .form-textarea {
+      background-color: #fff;
+      border: 1px solid var(--color-border);
+      color: var(--color-header);
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      width: 90%;
+      display: block;
+      margin: 0 auto 1rem auto;
+    }
+    /* Logout Button CSS */
+    .logout-btn {
+    background-color: #51425f; /* Primary button color */
+    color: #fff;               /* White text */
+    padding: 0.5rem 1rem;       /* Vertical & horizontal padding */
+    border: none;              /* No border */
+    border-radius: 0.25rem;     /* Slightly rounded corners */
+    cursor: pointer;           /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+    }
 
-    </body>
+    .logout-btn:hover {
+    background-color: #948e99; /* Hover state color */
+    }
+    .btn {
+      background-color: var(--color-button);
+      color: #fff;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 66.67%;
+      margin: 0 auto;
+      display: block;
+    }
+    .btn:hover {
+      background-color: var(--color-border);
+    }
+    /* Grid layout for cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    /* Card buttons styling */
+    .card-buttons {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .card-buttons .btn {
+      margin: 0 0.25rem;
+      width: auto;
+      padding: 0.5rem 1rem;
+      display: inline-block;
+    }
+    /* Filter dropdown */
+    .filter-dropdown {
+      max-width: 300px;
+      margin: 0 auto 2rem auto;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Navbar -->
+  <header>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <div class="header-container">
+      <h1 class="header-title">College Events</h1>
+      <h2 class="header-subtitle">Super Admin Dashboard</h2>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Hero Section -->
+    <section style="text-align: center; margin-bottom: 2rem;">
+      <h2 class="text-3xl">Manage University Profiles</h2>
+      <p class="text-lg" style="max-width: 600px; margin: 0 auto;">
+        Create and update university profiles, manage official event feeds, and oversee campus-wide events.
+      </p>
+    </section>
+
+    <!-- Create New University Profile Form -->
+    <section class="card" style="max-width: 600px; margin: 0 auto 2rem auto;">
+      <h3 class="text-2xl">Create University Profile</h3>
+      <form>
+        <input type="text" id="uniName" placeholder="University Name" required class="form-input">
+        <input type="text" id="uniLocation" placeholder="Location" required class="form-input">
+        <textarea id="uniDescription" placeholder="University Description" rows="3" required class="form-textarea"></textarea>
+        <!-- You can add additional fields (e.g., Number of Students, Logo upload) here -->
+        <button type="button" onclick="createUniversityProfile()" class="btn font-semibold">Create Profile</button>
+      </form>
+    </section>
+
+    <!-- Filter Dropdown for University Profiles -->
+    <section style="text-align: center; margin-bottom: 2rem;">
+      <select id="uniFilter" class="form-select filter-dropdown">
+        <option value="all">All Universities</option>
+        <option value="approved">Approved</option>
+        <option value="pending">Pending Approval</option>
+      </select>
+    </section>
+
+    <!-- Existing University Profiles List -->
+    <section>
+      <h2 class="text-3xl">Existing University Profiles</h2>
+      <div class="grid">
+        <!-- University Profile Card 1 -->
+        <div class="card">
+          <h3>University of Example</h3>
+          <div>
+            <p><strong>Location:</strong> Example City</p>
+            <p><strong>Description:</strong> A leading institution in innovation and research.</p>
+            <p><strong>Students:</strong> 20,000</p>
+            <p><strong>Status:</strong> Pending Approval</p>
+          </div>
+          <div class="card-buttons">
+            <button class="btn" onclick="approveUniversity('University of Example')">Approve</button>
+            <button class="btn" onclick="viewRSOs('University of Example')">View RSOs</button>
+            <button class="btn" onclick="editUniversity('University of Example')">Edit</button>
+            <button class="btn" onclick="deleteUniversity('University of Example')">Delete</button>
+          </div>
+        </div>
+        <!-- University Profile Card 2 -->
+        <div class="card">
+          <h3>Example State University</h3>
+          <div>
+            <p><strong>Location:</strong> Sample Town</p>
+            <p><strong>Description:</strong> Dedicated to academic excellence and community engagement.</p>
+            <p><strong>Students:</strong> 15,000</p>
+            <p><strong>Status:</strong> Approved</p>
+          </div>
+          <div class="card-buttons">
+            <button class="btn" onclick="viewRSOs('Example State University')">View RSOs</button>
+            <button class="btn" onclick="editUniversity('Example State University')">Edit</button>
+            <button class="btn" onclick="deleteUniversity('Example State University')">Delete</button>
+          </div>
+        </div>
+        <!-- Additional university profile cards can be added here -->
+      </div>
+    </section>
+  </main>
+</body>
 </html>
