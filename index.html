@@ -15,19 +15,17 @@
   />
 
   <script type="text/javascript" src="js/functions.js"></script>
-  <title>College Events</title>
+  <title>Campus Connect</title>
 
-  <!-- Custom CSS for Color Palette & Font Styling -->
   <style>
-    /* Base color palette: #e7eed0 | #cad1c3 | #948e99 | #51425f | #2e1437 */
+    /* Base color palette */
     :root {
       --color-light-bg:  #e7eed0; /* overall page background */
       --color-card-bg:   #cad1c3; /* card backgrounds */
       --color-border:    #948e99; /* border & subtle accents */
       --color-button:    #51425f; /* primary button background */
-      --color-header:    #2e1437; /* header / darkest accent */
+      --color-header:    #2e1437; /* header (purple) */
     }
-
     body {
       font-family: 'Lato', sans-serif;
       background-color: var(--color-light-bg);
@@ -39,21 +37,39 @@
       font-family: 'Cinzel', serif;
       color: var(--color-header);
     }
+    /* Header styling */
     header {
       background-color: var(--color-header);
+      padding: 1.5rem 0;
     }
+    .header-container {
+      max-width: 5xl; /* Tailwind's max-w-5xl */
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 0 1rem;
+      text-align: center;
+    }
+    /* Header text */
+    .header-title {
+      font-size: 3rem; /* text-5xl is roughly 3rem in Tailwind */
+      color: #fff;
+      margin: 0;
+    }
+    .header-tagline {
+      font-size: 1.5rem; /* text-2xl size */
+      color: #fff;
+      margin-top: 0.5rem;
+    }
+    /* Card styling */
     .card {
       background-color: var(--color-card-bg);
       border: 1px solid var(--color-border);
       border-radius: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    
-    .card h3 {
-      text-align: center;
-    }
-   
-    .form-input, .form-select {
+    /* Form elements */
+    .form-input,
+    .form-select {
       background-color: #fff;
       border: 1px solid var(--color-border);
       color: var(--color-header);
@@ -71,11 +87,14 @@
       border-radius: 0.25rem;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      width: 66.67%;
+      margin: 0 auto;
+      display: block;
     }
     .btn:hover {
       background-color: var(--color-border);
     }
-    /* Two-column layout for desktop */
+    /* Two-column layout */
     .two-column {
       display: flex;
       flex-direction: row;
@@ -91,63 +110,41 @@
     .form-group {
       margin-bottom: 1.5rem;
     }
-    .center-btn {
-      width: 66.67%; 
-      margin: 0 auto;
-      display: block;
-    }
   </style>
 </head>
 <body>
   <!-- Header / Navbar -->
-  <header class="py-4">
-    <div class="max-w-5xl mx-auto px-4">
-      <h1 class="text-4xl text-white text-center">College Events</h1>
+  <header class="bg-[#2e1437] py-6">
+    <div class="header-container max-w-5xl mx-auto px-4 text-center">
+      <h1 class="header-title text-5xl text-white">Campus Connect</h1>
+      <p class="header-tagline text-2xl text-white">Where College Events Come Alive</p>
     </div>
   </header>
 
   <!-- Main Content -->
   <main class="max-w-5xl mx-auto px-4 py-10">
-    <!-- Intro / Hero Section -->
+    <!-- Hero Section -->
     <section style="text-align: center; margin-bottom: 3rem;">
-        <h2 class="text-3xl mb-2">Welcome to Your Campus Event Hub</h2>
-        <p class="text-lg" style="max-width: 600px; margin: 0 auto;">
-          Manage your campus events, discover what's happening around you, and connect with organizations.
-        </p>
-      </section>
- 
-    <!-- Two-Column Layout for Forms -->
+      <h2 class="text-3xl mb-2">Welcome to Your Campus Event Hub</h2>
+      <p class="text-lg" style="max-width: 600px; margin: 0 auto;">
+        Manage your campus events, discover what's happening around you, and connect with organizations.
+      </p>
+    </section>
+
+    <!-- Two-Column Layout for Sign In and Create Account -->
     <div class="two-column">
       <!-- Sign In Card -->
       <section class="card">
-        <h3 class="text-2xl mb-6">Sign In</h3>
+        <h3 class="text-2xl mb-6 text-center">Sign In</h3>
         <form>
           <div class="form-group">
-            <input
-              type="email"
-              id="loginEmail"
-              placeholder="Email"
-              required
-              class="form-input"
-            />
+            <input type="email" id="loginEmail" placeholder="Email" required class="form-input">
           </div>
           <div class="form-group">
-            <input
-              type="password"
-              id="loginPassword"
-              placeholder="Password"
-              required
-              class="form-input"
-            />
+            <input type="password" id="loginPassword" placeholder="Password" required class="form-input">
           </div>
           <div class="form-group text-center">
-            <button
-              type="button"
-              onclick="login()"
-              class="btn font-semibold center-btn"
-            >
-              Sign In
-            </button>
+            <button type="button" onclick="login()" class="btn font-semibold">Sign In</button>
           </div>
           <p id="loginRes" class="mt-3 text-sm text-center"></p>
         </form>
@@ -155,7 +152,7 @@
 
       <!-- Create Account Card -->
       <section class="card">
-        <h3 class="text-2xl mb-6">Create Account</h3>
+        <h3 class="text-2xl mb-6 text-center">Create Account</h3>
         <form>
           <div class="form-group">
             <select id="signUpUserType" class="form-select">
@@ -165,40 +162,16 @@
             </select>
           </div>
           <div class="form-group">
-            <input
-              type="text"
-              id="signUpName"
-              placeholder="Name"
-              required
-              class="form-input"
-            />
+            <input type="text" id="signUpName" placeholder="Name" required class="form-input">
           </div>
           <div class="form-group">
-            <input
-              type="email"
-              id="signUpEmail"
-              placeholder="Email"
-              required
-              class="form-input"
-            />
+            <input type="email" id="signUpEmail" placeholder="Email" required class="form-input">
           </div>
           <div class="form-group">
-            <input
-              type="password"
-              id="signUpPassword"
-              placeholder="Password"
-              required
-              class="form-input"
-            />
+            <input type="password" id="signUpPassword" placeholder="Password" required class="form-input">
           </div>
           <div class="form-group text-center">
-            <button
-              type="button"
-              onclick="signUp()"
-              class="btn font-semibold center-btn"
-            >
-              Sign Up
-            </button>
+            <button type="button" onclick="signUp()" class="btn font-semibold">Sign Up</button>
           </div>
           <p id="signupRes" class="mt-3 text-sm text-center"></p>
         </form>

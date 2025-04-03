@@ -1,15 +1,193 @@
-
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="description" content="Student Page">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="/src/output.css" />
-        <script type="text/javascript" src="js/functions.js"></script>
-    </head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Student Page - College Event Website" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <body>
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="/src/output.css" />
 
-    </body>
+  <!-- Collegiate Fonts (Google Fonts) -->
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap" 
+    rel="stylesheet" 
+  />
+
+  <script type="text/javascript" src="js/functions.js"></script>
+  <title>Student Dashboard - College Events</title>
+
+  <!-- Custom CSS for Color Palette & Styling -->
+  <style>
+    /* Base color palette */
+    :root {
+      --color-light-bg:  #e7eed0;
+      --color-card-bg:   #cad1c3;
+      --color-border:    #948e99;
+      --color-button:    #51425f;
+      --color-header:    #2e1437;
+    }
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--color-light-bg);
+      color: var(--color-header);
+      margin: 0;
+      padding: 0;
+    }
+    /* Header styling */
+    header {
+      background-color: var(--color-header);
+    }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-title {
+      color: white;
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      margin: 0;
+    }
+    .logout-btn {
+      background-color: var(--color-button);
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .logout-btn:hover {
+      background-color: var(--color-border);
+    }
+    /* Container for page content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .hero h2 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    /* Grid Layout for Event Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    /* Event Card Styling */
+    .event-card {
+      background-color: var(--color-card-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+    }
+    .event-card h3 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .event-details p {
+      margin: 0.25rem 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Navbar -->
+  <header>
+    <div class="header-container">
+      <h1 class="header-title">College Events</h1>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <h2>Welcome to your student dashboard, [Student Name]!</h2>
+      <p>
+        Here you can view all public events, private university events, and RSO events.
+      </p>
+    </section>
+
+    <!-- Events Grid -->
+    <section>
+      <h2 style="text-align: center;">Your Events</h2>
+      <div class="grid">
+        <!-- Event Card 1 -->
+        <div class="event-card">
+          <h3>Tech Talk: Future of AI</h3>
+          <div class="event-details">
+            <p><strong>Date:</strong> April 10, 2025</p>
+            <p><strong>Time:</strong> 3:00 PM - 5:00 PM</p>
+            <p><strong>Location:</strong> Engineering Building Room 101</p>
+            <p><strong>Category:</strong> Tech Talk</p>
+          </div>
+          <p>A discussion on the future implications of artificial intelligence in our daily lives.</p>
+        </div>
+        <!-- Event Card 2 -->
+        <div class="event-card">
+          <h3>Fundraiser: Charity Run</h3>
+          <div class="event-details">
+            <p><strong>Date:</strong> April 15, 2025</p>
+            <p><strong>Time:</strong> 9:00 AM - 12:00 PM</p>
+            <p><strong>Location:</strong> Campus Grounds</p>
+            <p><strong>Category:</strong> Fundraising</p>
+          </div>
+          <p>Join us for a charity run to support local nonprofits. Lace-up and make a difference!</p>
+        </div>
+        <!-- Event Card 3 -->
+        <div class="event-card">
+          <h3>Social Mixer</h3>
+          <div class="event-details">
+            <p><strong>Date:</strong> April 20, 2025</p>
+            <p><strong>Time:</strong> 6:00 PM - 9:00 PM</p>
+            <p><strong>Location:</strong> Student Union Lounge</p>
+            <p><strong>Category:</strong> Social</p>
+          </div>
+          <p>Come meet new people and network with your peers at our social mixer!</p>
+        </div>
+        <!-- Event Card 4 -->
+        <div class="event-card">
+          <h3>Workshop: Resume Building</h3>
+          <div class="event-details">
+            <p><strong>Date:</strong> April 22, 2025</p>
+            <p><strong>Time:</strong> 1:00 PM - 3:00 PM</p>
+            <p><strong>Location:</strong> Career Center Room 5</p>
+            <p><strong>Category:</strong> Workshop</p>
+          </div>
+          <p>Learn how to build a professional resume that stands out to potential employers.</p>
+        </div>
+        <!-- Event Card 5 -->
+        <div class="event-card">
+          <h3>Art Exhibition</h3>
+          <div class="event-details">
+            <p><strong>Date:</strong> April 25, 2025</p>
+            <p><strong>Time:</strong> 10:00 AM - 4:00 PM</p>
+            <p><strong>Location:</strong> Art Gallery</p>
+            <p><strong>Category:</strong> Cultural</p>
+          </div>
+          <p>Explore the latest art pieces created by student artists in our annual exhibition.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
 </html>
