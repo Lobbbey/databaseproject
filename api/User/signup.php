@@ -4,7 +4,7 @@
     $Name = $inData["Name"];
     $Email = $inData["Email"];
     $Password = $inData["Password"];
-    $Usertype = $inData["Usertype"];
+    $Usertype = $inData["UserType"];
 
     $conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
     if($conn->connect_error){
