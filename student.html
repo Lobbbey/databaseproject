@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="description" content="Student Dashboard - College Event Website" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <!-- Tailwind CSS -->
   <link rel="stylesheet" href="/src/output.css" />
-  
+
   <!-- Collegiate Fonts (Google Fonts) -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-  
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Lato:wght@400;700&display=swap"
+    rel="stylesheet" />
+
   <script type="text/javascript" src="js/functions.js"></script>
+  <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+      const userID = readCookie("userID");
+      loadUserRSOs(userID);
+      loadRSOEvents();
+      loadPrivateEvents();
+      loadPublicEvents();
+    });
+  </script>
   <title>Student Dashboard - College Events</title>
-  
+
   <style>
     /* Base color palette */
     :root {
-      --color-light-bg:  #e7eed0;
-      --color-card-bg:   #cad1c3;
-      --color-border:    #948e99;
-      --color-button:    #51425f;
-      --color-header:    #2e1437;
+      --color-light-bg: #e7eed0;
+      --color-card-bg: #cad1c3;
+      --color-border: #948e99;
+      --color-button: #51425f;
+      --color-header: #2e1437;
     }
+
     body {
       font-family: 'Lato', sans-serif;
       background-color: var(--color-light-bg);
@@ -33,61 +42,77 @@
       margin: 0;
       padding: 0;
     }
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-family: 'Cinzel', serif;
       color: var(--color-header);
       text-align: center;
       margin: 0;
       padding: 0;
     }
+
     /* Header styling */
     header {
       background-color: var(--color-header);
       padding: 1.5rem 0;
     }
+
     .header-container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1rem;
       text-align: center;
     }
+
     .header-title {
       font-size: 3rem;
       color: #fff;
     }
+
     .header-subtitle {
       font-size: 1.5rem;
       color: #fff;
       margin-top: 0.5rem;
     }
+
     /* Main container */
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
     }
+
     /* Event Card styling */
     .event-card {
       background-color: var(--color-card-bg);
       border: 1px solid var(--color-border);
       border-radius: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       padding: 1.5rem;
       margin-bottom: 2rem;
     }
+
     .event-card h3 {
       text-align: center;
       margin-top: 0;
       margin-bottom: 1rem;
     }
+
     .event-details p {
       margin: 0.25rem 0;
     }
+
     .event-type {
       text-align: center;
       font-weight: bold;
       margin-bottom: 0.5rem;
     }
+
     /* Buttons for event interaction */
     .btn {
       background-color: var(--color-button);
@@ -100,32 +125,44 @@
       display: inline-block;
       margin: 0.25rem;
     }
+
     .btn:hover {
       background-color: var(--color-border);
     }
+
     /* Grid layout for event cards */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
       margin-top: 2rem;
-    }    
+    }
+
     /* Logout Button CSS */
     .logout-btn {
-    background-color: #51425f; /* Primary button color */
-    color: #fff;               /* White text */
-    padding: 0.5rem 1rem;       /* Vertical & horizontal padding */
-    border: none;              /* No border */
-    border-radius: 0.25rem;     /* Slightly rounded corners */
-    cursor: pointer;           /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth color transition */
+      background-color: #51425f;
+      /* Primary button color */
+      color: #fff;
+      /* White text */
+      padding: 0.5rem 1rem;
+      /* Vertical & horizontal padding */
+      border: none;
+      /* No border */
+      border-radius: 0.25rem;
+      /* Slightly rounded corners */
+      cursor: pointer;
+      /* Pointer cursor on hover */
+      transition: background-color 0.3s ease;
+      /* Smooth color transition */
     }
 
     .logout-btn:hover {
-    background-color: #948e99; /* Hover state color */
+      background-color: #948e99;
+      /* Hover state color */
     }
   </style>
 </head>
+
 <body>
   <!-- Header / Navbar -->
   <header>
@@ -135,7 +172,7 @@
       <h2 class="header-subtitle">Student Dashboard</h2>
     </div>
   </header>
-  
+
   <!-- Main Content -->
   <main class="container">
     <!-- Hero Section -->
@@ -145,8 +182,35 @@
         View public events, private university events, and RSO events. Rate, comment, and join the conversation.
       </p>
     </section>
-    
-    
+
+    <!-- RSO OPTIONS -->
+    <section>
+      <h2 class="text-2xl">RSOs You Can Join</h2>
+      <div id="available-rsos" class="grid"></div>
+    </section>
+
+    <section>
+      <h2 class="text-2xl mt-6">RSOs You're In</h2>
+      <div id="joined-rsos" class="grid"></div>
+    </section>
+
+    <!-- RSO Events -->
+    <section>
+      <h2 class="text-3xl">Events From Your RSO</h2>
+      <div class="grid"></div>
+    </section>
+
+    <!-- Private Events -->
+    <section>
+      <h2 class="text-3xl">Events From Your University</h2>
+
+    </section>
+
+    <!-- Public Events -->
+    <section>
+      <h2 class="text-3xl">Public Events</h2>
+    </section>
+
     <!-- Events Grid -->
     <section>
       <h2 class="text-3xl">Upcoming Events</h2>
@@ -204,4 +268,5 @@
     </section>
   </main>
 </body>
+
 </html>

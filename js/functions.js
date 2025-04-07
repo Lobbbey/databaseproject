@@ -230,4 +230,112 @@ function createRSO() {
 
 }
 
-function createEvent() { }
+function joinRSO(){}
+
+function leaveRSO(){}
+
+function createEvent() {}
+
+async function loadUserRSOs(uid) {
+    const response = await fetch("/php/RSO/getRSO.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ UID: uid })
+    });
+    const data = await response.json();
+
+    const joinContainer = document.getElementById("available-rsos");
+    const joinedContainer = document.getElementById("joined-rsos");
+
+    joinContainer.innerHTML = "";
+    joinedContainer.innerHTML = "";
+
+    // Available RSOs
+    data.available_rsos.forEach(rso => {
+        const rsoCard = document.createElement("div");
+        rsoCard.className = "event-card";
+        rsoCard.innerHTML = `
+      <h3>${rso.Name}</h3>
+      <p>${rso.Description}</p>
+      <button class="btn" onclick="joinRSO(${uid}, ${rso.RSOID})">Join</button>
+    `;
+        joinContainer.appendChild(rsoCard);
+    });
+
+    // Joined RSOs
+    data.joined_rsos.forEach(rso => {
+        const rsoCard = document.createElement("div");
+        rsoCard.className = "event-card";
+        rsoCard.innerHTML = `
+      <h3>${rso.Name}</h3>
+      <p>${rso.Description}</p>
+      <button class="btn" onclick="leaveRSO(${uid}, ${rso.RSOID})">Leave</button>
+    `;
+        joinedContainer.appendChild(rsoCard);
+    });
+}
+
+function joinRSO(uid, rsoid) {
+    fetch("/php/RSO/join.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ UID: uid, RSOID: rsoid })
+    }).then(() => loadUserRSOs(uid));
+}
+
+function leaveRSO(uid, rsoid) {
+    fetch("/php/RSO/leave.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ UID: uid, RSOID: rsoid })
+    }).then(() => loadUserRSOs(uid));
+}
+
+async function loadRSOEvents() {
+    try {
+        const response = await fetch("/php/rsoEvents.php");
+        const events = await response.json();
+
+        const container = document.querySelector("section:nth-of-type(2) .grid") || createGrid("section:nth-of-type(2)");
+        container.innerHTML = ""; // Clear existing cards
+
+        events.forEach(event => {
+            const card = document.createElement("div");
+            card.classList.add("event-card");
+
+            card.innerHTML = `
+        <h3>${event.Name}</h3>
+        <div class="event-type">${event.EventType} Event</div>
+        <div class="event-details">
+          <p><strong>Date:</strong> ${formatDate(event.Date)}</p>
+          <p><strong>Start:</strong> ${formatTime(event.Start)}</p>
+          <p><strong>End:</strong> ${formatTime(event.End)}</p>
+          <p><strong>Location:</strong> ${event.Location}</p>
+        </div>
+        <p>${event.Description}</p>
+        <div style="text-align: center; margin-top: 1rem;">
+          <button class="btn" onclick="rateEvent('${event.Name}')">Rate</button>
+          <button class="btn" onclick="commentEvent('${event.Name}')">Comment</button>
+        </div>
+      `;
+
+            container.appendChild(card);
+        });
+    } catch (err) {
+        console.error("Error loading RSO events:", err);
+    }
+}
+
+async function loadPrivateEvents(){}
+
+async function loadPublicEvents(){}
+
+function formatDate(dateStr) {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateStr).toLocaleDateString(undefined, options);
+}
+
+function formatTime(timeStr) {
+    const [hour, minute] = timeStr.split(":");
+    return `${hour}:${minute}`;
+}
