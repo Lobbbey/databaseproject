@@ -175,7 +175,7 @@ function adminCreateUser() {
     let email = document.getElementById("signUpEmail").value;
     let password = document.getElementById("signUpPassword").value;
     let usertype = Student;
-    let uni = document.getElementById("signUpUniversity").value;
+    let uni = document.getElementById("signUpUni").value;
     document.getElementById("signupRes").innerHTML = "";
 
     let tmp = { Name: name, Email: email, Password: password, UserType: usertype, University: uni};
