@@ -233,15 +233,10 @@
       <h3 class="text-2xl">Create New RSO</h3>
       <form>
         <input type="text" id="rsoName" placeholder="RSO Name" required class="form-input">
+        <input type="text" id="uniID" placeholder="University ID" required class="form-input">
         <textarea id="rsoDescription" placeholder="RSO Description" rows="3" required class="form-textarea"></textarea>
-        <!-- Optionally, include a dropdown if RSO admins manage multiple universities -->
-        <!--
-        <select id="rsoUniversity" class="form-select">
-          <option value="uni1">University of Example</option>
-          <option value="uni2">Example State University</option>
-        </select>
-        -->
         <button type="button" onclick="createRSO()" class="btn font-semibold">Create RSO</button>
+        <p id="rsoRES" class="mt-3 text-sm text-center"></p>
       </form>
     </section>
 

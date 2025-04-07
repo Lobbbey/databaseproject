@@ -109,7 +109,7 @@ function signUp() {
     }
 }
 
-function saveCookie(){
+function saveCookie() {
     let minutes = 20;
     let date = new Date();
     date.setTime(date.getTime() + (minutes * 60 * 1000));
@@ -129,7 +129,7 @@ function readCookie() {
         else if (tokens[0] == "userID") {
             userID = tokens[1];
         }
-        else if(tokens[0] == "UniversityID"){
+        else if (tokens[0] == "UniversityID") {
             uniID = tokens[1];
         }
         else if (tokens[0] == "userType") {
@@ -142,11 +142,11 @@ function readCookie() {
     }
 }
 
-function promoteUser(){
+function promoteUser() {
     let email = document.getElementById("updateEmail").value;
     document.getElementById("updateResult").innerHTML = "";
-    
-    let tmp = {Email: email};
+
+    let tmp = { Email: email };
     let jsonPayload = JSON.stringify(tmp);
     let url = urlBase + '/User/promote.' + extension;
 
@@ -155,21 +155,21 @@ function promoteUser(){
     xhr.open("PUT", url, true);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-    try{
-        xhr.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status == 200){
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("updateResult").innerHTML = "User Promoted";
             }
         };
         xhr.send(jsonPayload);
     }
-    catch(error){
+    catch (error) {
         document.getElementById("updateResult").innerHTML = "Could not update user: " + error.message;
     }
 
 }
 
-function adminCreateUser(){
+function adminCreateUser() {
     let name = document.getElementById("signUpName").value;
     let email = document.getElementById("signUpEmail").value;
     let password = document.getElementById("signUpPassword").value;
@@ -201,3 +201,33 @@ function adminCreateUser(){
         document.getElementById("signupRes").innerHTML = err.message;
     }
 }
+
+function createRSO() {
+    let name = document.getElementById("rsoName").value;
+    let uniID = document.getElementById("uniID").value;
+    let desc = document.getElementById("rsoDescription").value;
+
+    let tmp = { Name: name, University_ID: uniID, Description: desc };
+
+    let jsonPayload = JSON.stringify(tmp);
+    let url = urlBase + '/RSO/create.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                document.getElementById("rsoRES").innerHTML = "RSO Created";
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch (error) {
+        document.getElementById("rsoRES").innerHTML = "RSO Create Failed: " + error.message;
+    }
+
+}
+
+function createEvent() { }

@@ -3,7 +3,6 @@
     $inData = json_decode(file_get_contents('php://input'), true);
     $Email = $inData["Email"];
 
-
     $conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
     if($conn->conection_error){
         returnWithError("error: Could not connect to database");
