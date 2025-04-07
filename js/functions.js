@@ -66,9 +66,10 @@ function signUp() {
     let email = document.getElementById("signUpEmail").value;
     let password = document.getElementById("signUpPassword").value;
     let usertype = document.getElementById("signUpUserType").value;
+    let uni = document.getElementById("signUpUniversity").value;
     document.getElementById("signupRes").innerHTML = "";
 
-    let tmp = { Name: name, Email: email, Password: password, UserType: usertype };
+    let tmp = { Name: name, Email: email, Password: password, UserType: usertype, University: uni};
     let jsonPayload = JSON.stringify(tmp);
     let url = urlBase + '/User/signup.' + extension;
 
@@ -174,9 +175,10 @@ function adminCreateUser() {
     let email = document.getElementById("signUpEmail").value;
     let password = document.getElementById("signUpPassword").value;
     let usertype = Student;
+    let uni = document.getElementById("signUpUniversity").value;
     document.getElementById("signupRes").innerHTML = "";
 
-    let tmp = { Name: name, Email: email, Password: password, UserType: usertype };
+    let tmp = { Name: name, Email: email, Password: password, UserType: usertype, University: uni};
     let jsonPayload = JSON.stringify(tmp);
     let url = urlBase + '/User/signup.' + extension;
 

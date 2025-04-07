@@ -5,12 +5,18 @@
     $Email = $inData["Email"];
     $Password = $inData["Password"];
     $Usertype = $inData["UserType"];
+    $University = $inData["University"];
 
     $conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
     if($conn->connect_error){
         returnWithError("error: Could not connect to database");
     }
     else{
+        $uniStmt = $conn->prepare("SELECT University_ID FROM Universities WHERE Name = ?");
+        $uniStmt->bind_param("s", $UniversityName);
+        $uniStmt->execute();
+        $uniResult = $uniStmt->get_result();
+        
         //Returns if username already exists in database
         $stmt = $conn->prepare("SELECT * FROM Users WHERE Email=?");
         $stmt->bind_param("s", $Email);
@@ -22,12 +28,14 @@
         }
         else{
             //Insert user into database
-            $stmt = $conn->prepare("INSERT INTO Users (Name, Email, Password, UserType) Values (?,?,?,?)");
-            $stmt->bind_param("ssss", $Name, $Email, $Password, $Usertype);
+            $University_ID = $uniResult->fetch_assoc()["University_ID"];
+            $stmt = $conn->prepare("INSERT INTO Users (Name, Email, Password, UserType, University_ID) Values (?,?,?,?,?)");
+            $stmt->bind_param("ssssi", $Name, $Email, $Password, $Usertype, $University_ID);
             $stmt->execute();
             sendResultInfoAsJson('{"result":"Finished Successfully"}');
         }
         $stmt->close();
+        $uniStmt->close();
         $conn->close();
     }
 
