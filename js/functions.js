@@ -141,3 +141,30 @@ function readCookie() {
         window.location.href = "index.html";
     }
 }
+
+function promoteUser(){
+    let email = document.getElementById("updateEmail").value;
+    document.getElementById("updateResult").innerHTML = "";
+    
+    let tmp = {Email: email};
+    let jsonPayload = JSON.stringify(tmp);
+    let url = urlBase + '/User/promote.' + extension;
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("PUT", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try{
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                let jsonObject = JSON.parse(xhr.responseText);
+                document.getElementById("updateResult").innerHTML = "User Promoted";
+            }
+        }
+    }
+    catch(error){
+        document.getElementById("updateResult").innerHTML = "Could not update user: " + error.message;
+    }
+
+}
