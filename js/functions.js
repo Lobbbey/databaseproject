@@ -158,10 +158,10 @@ function promoteUser(){
     try{
         xhr.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                let jsonObject = JSON.parse(xhr.responseText);
                 document.getElementById("updateResult").innerHTML = "User Promoted";
             }
-        }
+        };
+        xhr.send(jsonPayload);
     }
     catch(error){
         document.getElementById("updateResult").innerHTML = "Could not update user: " + error.message;
