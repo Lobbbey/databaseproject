@@ -168,3 +168,36 @@ function promoteUser(){
     }
 
 }
+
+function adminCreateUser(){
+    let name = document.getElementById("signUpName").value;
+    let email = document.getElementById("signUpEmail").value;
+    let password = document.getElementById("signUpPassword").value;
+    let usertype = Student;
+    document.getElementById("signupRes").innerHTML = "";
+
+    let tmp = { Name: name, Email: email, Password: password, UserType: usertype };
+    let jsonPayload = JSON.stringify(tmp);
+    let url = urlBase + '/User/signup.' + extension;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                let jsonObject = JSON.parse(xhr.responseText);
+                userID = jsonObject.UID;
+
+                if (userID < 1) {
+                    document.getElementById("signupResult").innerHTML = "Create User Failed: " + jsonObject.error;
+                    return;
+                }
+            }
+        };
+        xhr.send(jsonPayload);
+    } catch (error) {
+        document.getElementById("signupRes").innerHTML = err.message;
+    }
+}
