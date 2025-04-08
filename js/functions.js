@@ -132,6 +132,7 @@ function readCookie(key) {
     }
     return null; // Return null if the key is not found
 }
+
 // function readCookie() {
 //     userID = -1;
 //     let data = document.cookie;
@@ -308,7 +309,7 @@ async function loadUserRSOs(uid) {
 }
 
 function joinRSO(uid, rsoid) {
-    fetch("/php/RSO/join.php", {
+    fetch("/api/RSO/join.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UID: uid, RSOID: rsoid })
@@ -322,6 +323,7 @@ function leaveRSO(uid, rsoid) {
         body: JSON.stringify({ UID: uid, RSOID: rsoid })
     }).then(() => loadUserRSOs(uid));
 }
+
 async function loadEvents(uid){
     // Fetch the events for the user
     let tmp = { UID: uid };
