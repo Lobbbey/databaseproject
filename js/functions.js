@@ -395,7 +395,7 @@ function displayEvents(events, containerId) {
     });
 }
 
-function loadEventComments(eventID, containerId) {
+async function loadEventComments(eventID, containerId) {
     console.log("Loading comments for event ID:", eventID);
 
     fetch("/api/Comment/getComments.php", {
@@ -411,11 +411,11 @@ function loadEventComments(eventID, containerId) {
             console.log("Comments:", comments);
             const commentsContainer = document.getElementById(containerId);
             if (!commentsContainer) return;
-            comments.forEach(comment => {
+            comments.forEach(async comment => {
                 const commentCard = document.createElement("div");
                 commentCard.className = "comment-card";
                 commentCard.innerHTML = `
-            <h4>${getUserName(comment.User_ID)}</h4>
+            <h4>${await getUserName(comment.User_ID)}</h4>
             <p>${comment.CommentText}</p>
             <p><strong>Time:</strong> ${comment.Timestamp}</p>
             `;
@@ -427,7 +427,7 @@ function loadEventComments(eventID, containerId) {
         });
 }
 
-function getUserName(User_ID){
+async function getUserName(User_ID){
     fetch("/api/User/getUserName.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
