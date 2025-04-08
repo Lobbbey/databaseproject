@@ -209,14 +209,6 @@ async function createEventAdmin(){
         Email: document.getElementById("eventEmail").value
     };
 
-    // Optional: Simple validation
-    for (let key in event) {
-        if (!event[key]) {
-            alert(`Please fill in the ${key} field.`);
-            return;
-        }
-    }
-
     try {
         const response = await fetch("/api/Event/create.php", {
             method: "POST",

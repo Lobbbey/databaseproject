@@ -26,7 +26,7 @@ $EventType = $inData["EventType"];
 $Lname = $inData["Location"];
 $Phone = $inData["Phone"];
 $Email = $inData["Email"];
-$RSOID = isset($inData["RSOID"]) ? $inData["RSOID"] : null;
+$RSOID = isset($inData["RSOID"]) ? $inData["RSOID"] : -1;
 
 // Connect to DB
 $conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
