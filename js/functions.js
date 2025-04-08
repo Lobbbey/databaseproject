@@ -384,7 +384,7 @@ function displayEvents(events, containerId) {
         <p><strong>Email:</strong> ${event.Email}</p>
       </div>
       <p>${event.Description}</p>
-        <button class="btn" onclick="loadEventComments(${event.Event_ID})">View Comments</button>
+        <h4 class="">Comments</h4>
     `;
         container.appendChild(card);
         const commentsContainer = document.createElement("div");
