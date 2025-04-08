@@ -16,7 +16,6 @@ foreach ($required as $field) {
 }
 
 // Assign input values
-$UID = $inData["UID"];
 $Name = $inData["Name"];
 $Catagory = $inData["Catagory"];
 $Description = $inData["Description"];
