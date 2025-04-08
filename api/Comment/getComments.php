@@ -33,6 +33,6 @@ while ($row = $commentResult->fetch_assoc()) {
 }
 $commentQuery->close();
 
-echo json_encode("comments" => $eventComments);
+echo json_encode(["comments" => $eventComments]);
 $conn->close();
 ?>
