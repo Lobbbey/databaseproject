@@ -416,7 +416,7 @@ function loadEventComments(eventID, containerId) {
                 commentCard.innerHTML = `
             <h4>${comment.UserName}</h4>
             <p>${comment.Comment}</p>
-            <p><strong>Time:</strong> ${comment.Time}</p>
+            <p><strong>Time:</strong> ${comment.Timestamp}</p>
             `;
                 commentsContainer.appendChild(commentCard);
             })
