@@ -112,7 +112,7 @@ function signUp() {
 }
 
 function saveCookie(userID, userName, uniID, userType) {
-    let minutes = 20;
+    let minutes = 90;
     let date = new Date();
     date.setTime(date.getTime() + (minutes * 60 * 1000));
     const expires = "expires=" + date.toGMTString();
