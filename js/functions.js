@@ -325,7 +325,7 @@ function leaveRSO(uid, rsoid) {
     }).then(() => loadUserRSOs(uid));
 }
 async function loadEvents(uid){
-    // Fetch the RSO events for the user
+    // Fetch the events for the user
     let tmp = { UID: uid };
     let jsonPayload = JSON.stringify(tmp);
     let url = urlBase + '/Event/getEvents.' + extension;
