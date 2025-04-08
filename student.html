@@ -18,7 +18,9 @@
     document.addEventListener("DOMContentLoaded", () => {
       const userID = readCookie("userID");
       loadUserRSOs(userID);
-      loadEvents(userID);
+      loadRSOEvents(userID);       // Events from your RSOs
+      loadPrivateEvents(userID);   // Private university events
+      loadPublicEvents();          // Public events
     });
   </script>
   <title>Student Dashboard - College Events</title>

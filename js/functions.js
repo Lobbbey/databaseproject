@@ -248,12 +248,6 @@ function createRSO() {
 
 }
 
-function joinRSO(){}
-
-function leaveRSO(){}
-
-function createEvent() {}
-
 async function loadUserRSOs(uid) {
     // Fetch the available and joined RSOs for the user
     let tmp = { UID: uid };
@@ -423,46 +417,28 @@ async function loadEvents(uid){
 //     }
 // }
 
-async function loadPublicEvents(){
-     try {
-    const res = await fetch("/api/Events/getPublicEvents.php");
-    const data = await res.json();
-
-    if (data.error) {
-      console.error(data.error);
-      return;
-    }
-
-    displayEvents(data.public_events, "public-events");
-  } catch (err) {
-    console.error("Error loading public events:", err);
-  }
+function loadPublicEvents() {
+    fetch("/api/Event/getPublicEvents.php")
+        .then(res => res.json())
+        .then(data => {
+            const pubEvents = data.public_events || [];
+            displayEvents(pubEvents, "public-events");
+        })
+        .catch(err => console.error("Failed to load public events:", err));
 }
 
-async function loadPrivateEvents(){
-    const uid = readCookie("userID");
-    if (!uid) {
-        console.error("User ID not found in cookie.");
-        return;
-    }
-
-    try {
-        const res = await fetch("/php/getPrivateEvents.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ UID: uid })
-        });
-
-        const data = await res.json();
-        if (data.error) {
-            console.error(data.error);
-            return;
-        }
-
-        displayEvents(data.private_events, "private-events");
-    } catch (err) {
-        console.error("Error loading private events:", err);
-    }
+function loadPrivateEvents(userID) {
+    fetch("/api/Event/getPrivateEvents.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ UID: userID })
+    })
+        .then(res => res.json())
+        .then(data => {
+            const pEvents = data.private_events || [];
+            displayEvents(pEvents, "private-events");
+        })
+        .catch(err => console.error("Failed to load private events:", err));
 }
 
 
