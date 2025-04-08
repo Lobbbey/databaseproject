@@ -414,8 +414,8 @@ function loadEventComments(eventID, containerId) {
                 const commentCard = document.createElement("div");
                 commentCard.className = "comment-card";
                 commentCard.innerHTML = `
-            <h4>${comment.UserName}</h4>
-            <p>${comment.Comment}</p>
+            <h4>${comment.User_ID}</h4>
+            <p>${comment.CommentText}</p>
             <p><strong>Time:</strong> ${comment.Timestamp}</p>
             `;
                 commentsContainer.appendChild(commentCard);
