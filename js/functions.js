@@ -202,7 +202,7 @@ async function createEventAdmin(){
         Description: document.getElementById("eventDescription").value,
         Time: document.getElementById("eventTime").value,
         Date: document.getElementById("eventDate").value,
-        EventType: document.querySelector("select").value,
+        EventType: document.querySelector("eventType").value,
         RSOID: document.getElementById("eventRSOorUni").value,
         Location: document.getElementById("eventLocation").value,
         Phone: document.getElementById("eventPhone").value,
@@ -218,7 +218,7 @@ async function createEventAdmin(){
         .then(text => {
             console.log("📦 Raw response:", text);
             const data = JSON.parse(text);
-            if (data.result === "success") {
+            if (data.result == "success") {
                 alert("✅ Event created successfully!");
             } else {
                 alert("❌ Failed: " + data.result);
