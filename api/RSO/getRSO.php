@@ -35,7 +35,7 @@ $userQuery->close();
 $joinedRSOs = [];
 $joined = $conn->prepare("
     SELECT RSO.RSOID, RSO.Name, RSO.Description
-    FROM RSOs RSO
+    FROM RSO
     JOIN RSO_Members RM ON RSO.RSOID = RM.RSOID
     WHERE RM.UID = ?
 ");
