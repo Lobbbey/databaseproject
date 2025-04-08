@@ -402,9 +402,9 @@ function loadEventComments(eventID, containerId) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ EventID: eventID })
     })
-        .then(res => res.json())
-        .then(data => {
-            const comments = data.comments || [];
+        .then(res => res.json()) 
+        {
+            const comments = res.comments || [];
             const commentsContainer = document.getElementById(containerId);
             if (!commentsContainer) return;
             comments.forEach(comment => {
@@ -420,7 +420,7 @@ function loadEventComments(eventID, containerId) {
             if (comments.length === 0) {
                 commentsContainer.innerHTML = "<p>No comments available for this event.</p>";
             }
-        });
+        };
 }
 
 function formatDate(dateStr) {
