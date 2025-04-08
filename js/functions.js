@@ -194,6 +194,50 @@ function adminCreateUser() {
     }
 }
 
+async function createEvent(){
+    const event = {
+        UID: userID,
+        Name: document.getElementById("eventName").value,
+        Catagory: document.getElementById("eventCatagory").value,
+        Description: document.getElementById("eventDescription").value,
+        Time: document.getElementById("eventTime").value,
+        Date: document.getElementById("eventDate").value,
+        EventType: document.querySelector("select").value,
+        RSOID: document.getElementById("eventRSOorUni").value,
+        Location: document.getElementById("eventLocation").value,
+        Phone: document.getElementById("eventPhone").value,
+        Email: document.getElementById("eventEmail").value
+    };
+
+    // Optional: Simple validation
+    for (let key in event) {
+        if (!event[key]) {
+            alert(`Please fill in the ${key} field.`);
+            return;
+        }
+    }
+
+    try {
+        const response = await fetch("/api/Event/create.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(event)
+        });
+
+        const data = await response.json();
+
+        if (data.result === "success") {
+            alert("✅ Event created successfully!");
+        } else {
+            console.error("❌ Server response:", data);
+            alert("Failed to create event: " + (data.result || "Unknown error."));
+        }
+    } catch (error) {
+        console.error("❌ Error creating event:", error);
+        alert("Error submitting event.");
+    }
+}
+
 function createRSO() {
     let name = document.getElementById("rsoName").value;
     let uniID = document.getElementById("uniID").value;

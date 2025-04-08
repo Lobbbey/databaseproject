@@ -238,6 +238,28 @@
       </form>
     </section>
 
+    <!-- Create New Event Form -->
+    <section class="card" style="max-width: 600px; margin: 0 auto 2rem auto;">
+      <h3 class="text-2xl">Create New Event</h3>
+      <form>
+        <input type="text" id="eventName" placeholder="Name" required class="form-input">
+        <input type="text" id="eventCatagory" placeholder="Catagory" required class="form-input">
+        <textarea id="eventDescription" placeholder="Description" required rows="3" class="form-textarea"></textarea>
+        <input type="time" id="eventTime" placeholder="Time" required class="form-input">
+        <input type="date" id="eventDate" placeholder="Date" required class="form-input">
+        <select>
+          <option value="RSO">RSO</option>
+          <option value="Private">Private</option>
+          <option value="Public">Public</option>
+        </select>
+        <input type="text" id="eventRSOorUni" placeholder="RSOID or University Name" class="form-input">
+        <input type="text" id="eventLocation" placeholder="Location" required class="form-input">
+        <input type="tel" id="eventPhone" placeholder="Phone Number" required class="form-input">
+        <input type="email" id="eventEmail" placeholder="Email" required class="form-input">
+        <button type="button" onclick="createEvent()" class="btn font-semibold">Create Event</button>
+      </form>
+    </section>
+
     <!-- Create New RSO Form -->
     <section class="card" style="max-width: 600px; margin: 0 auto 2rem auto;">
       <h3 class="text-2xl">Create New RSO</h3>
