@@ -318,7 +318,7 @@ function leaveRSO(uid, rsoid) {
     }).then(() => loadUserRSOs(uid));
 }
 
-async function loadEvents(uid) {
+async function loadRSOEvents(uid) {
     fetch("/api/Event/getRSOEvents.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
