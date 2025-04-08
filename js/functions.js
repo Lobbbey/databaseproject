@@ -396,6 +396,7 @@ function displayEvents(events, containerId) {
 }
 
 function loadEventComments(eventID, containerId) {
+    console.log("Loading comments for event ID:", eventID);
     fetch("/api/Comment/getComments.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -412,7 +413,6 @@ function loadEventComments(eventID, containerId) {
                 commentCard.innerHTML = `
             <h4>${comment.UserName}</h4>
             <p>${comment.Comment}</p>
-            <p><strong>Date:</strong> ${formatDate(comment.Date)}</p>
             <p><strong>Time:</strong> ${formatTime(comment.Time)}</p>
             `;
                 commentsContainer.appendChild(commentCard);
