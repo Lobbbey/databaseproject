@@ -384,14 +384,14 @@ function displayEvents(events, containerId) {
         <p><strong>Email:</strong> ${event.Email}</p>
       </div>
       <p>${event.Description}</p>
-        <button class="btn" onclick="loadEventComments(${event.EventID})">View Comments</button>
+        <button class="btn" onclick="loadEventComments(${event.Event_ID})">View Comments</button>
     `;
         container.appendChild(card);
         const commentsContainer = document.createElement("div");
-        commentsContainer.id = `comments-${event.EventID}`;
+        commentsContainer.id = `comments-${event.Event_ID}`;
         commentsContainer.className = "comments-container";
         card.appendChild(commentsContainer);
-        loadEventComments(event.EventID, `comments-${event.EventID}`);
+        loadEventComments(event.Event_ID, `comments-${event.Event_ID}`);
     });
 }
 
