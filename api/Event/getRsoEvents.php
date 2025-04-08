@@ -35,12 +35,12 @@ $joined->close();
 
 $rsoEvents = [];
 $events = $conn->prepare("
-    SELECT E.EventID, E.Name, E.Description, E.StartTime, E.EndTime, E.Location, E.RSOID
+    SELECT E.Event_ID, E.Name, E.Catagory, E.Description, E.Time, E.Date,E.EventType, E.Lname, E.Phone, E.Email, E.RSOID
     FROM Events E
     JOIN RSO_Members RM ON E.RSOID = RM.RSOID
     WHERE RM.UID = ?
-    AND E.StartTime > NOW()
-    ORDER BY E.StartTime ASC
+    AND E.Time > NOW()
+    ORDER BY E.Time ASC
 ");
 $events->bind_param("i", $UID);
 $events->execute();
