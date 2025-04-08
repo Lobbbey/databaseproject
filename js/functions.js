@@ -254,6 +254,7 @@ async function loadUserRSOs(uid) {
     joinContainer.innerHTML = "";
     joinedContainer.innerHTML = "";
 
+    console.log(data);
     // Available RSOs
     data.available_rsos.forEach(rso => {
         const rsoCard = document.createElement("div");
