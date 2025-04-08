@@ -384,7 +384,7 @@ function displayEvents(events, containerId) {
         <p><strong>Email:</strong> ${event.Email}</p>
       </div>
       <p>${event.Description}</p>
-        <h4 class="pt-3">Comments</h4>
+        <h4 class="!pt-3">Comments</h4>
     `;
         container.appendChild(card);
         const commentsContainer = document.createElement("div");
