@@ -257,8 +257,8 @@ function createEvent() {}
 
 async function loadUserRSOs(uid) {
     // Fetch the available and joined RSOs for the user
-
-    let jsonPayload = JSON.stringify(uid);
+    let tmp = { UID: uid };
+    let jsonPayload = JSON.stringify(tmp);
     let url = urlBase + '/RSO/getRSO.' + extension;
 
     let xhr = new XMLHttpRequest();
