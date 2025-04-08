@@ -324,41 +324,88 @@ function leaveRSO(uid, rsoid) {
         body: JSON.stringify({ UID: uid, RSOID: rsoid })
     }).then(() => loadUserRSOs(uid));
 }
+async function loadRSOEvents(uid){
+    // Fetch the RSO events for the user
+    let tmp = { UID: uid };
+    let jsonPayload = JSON.stringify(tmp);
+    let url = urlBase + '/RSO/getRSOEvents.' + extension;
 
-async function loadRSOEvents() {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
     try {
-        const response = await fetch("/php/rsoEvents.php");
-        const events = await response.json();
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                const container = document.getElementById("rso-events");
+                container.innerHTML = ""; // Clear existing cards
 
-        const container = document.querySelector("section:nth-of-type(2) .grid") || createGrid("section:nth-of-type(2)");
-        container.innerHTML = ""; // Clear existing cards
-
-        events.forEach(event => {
-            const card = document.createElement("div");
-            card.classList.add("event-card");
-
-            card.innerHTML = `
-        <h3>${event.Name}</h3>
-        <div class="event-type">${event.EventType} Event</div>
-        <div class="event-details">
-          <p><strong>Date:</strong> ${formatDate(event.Date)}</p>
-          <p><strong>Start:</strong> ${formatTime(event.Start)}</p>
-          <p><strong>End:</strong> ${formatTime(event.End)}</p>
-          <p><strong>Location:</strong> ${event.Location}</p>
-        </div>
-        <p>${event.Description}</p>
-        <div style="text-align: center; margin-top: 1rem;">
-          <button class="btn" onclick="rateEvent('${event.Name}')">Rate</button>
-          <button class="btn" onclick="commentEvent('${event.Name}')">Comment</button>
-        </div>
-      `;
-
-            container.appendChild(card);
-        });
-    } catch (err) {
-        console.error("Error loading RSO events:", err);
+                console.log(data);
+                events = data.rsoEvents;
+                events.forEach(event => {
+                    const card = document.createElement("div");
+                    card.className = "event-card";
+                    card.innerHTML = `
+                <h3>${event.Name}</h3>
+                <div class="event-type">${event.EventType} Event</div>
+                <div class="event-details">
+                    <p><strong>Date:</strong> ${formatDate(event.Date)}</p>
+                    <p><strong>Start:</strong> ${formatTime(event.Start)}</p>
+                    <p><strong>End:</strong> ${formatTime(event.End)}</p>
+                    <p><strong>Location:</strong> ${event.Location}</p>
+                </div>
+                <p>${event.Description}</p>
+                <div style="text-align: center; margin-top: 1rem;">
+                    <button class="btn" onclick="rateEvent(${uid}, ${event.EventID})">Rate</button>
+                    <button class="btn" onclick="commentEvent(${uid}, ${event.EventID})">Comment</button>
+                </div>
+                `;
+                    container.appendChild(card);
+                });
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch (error) {
+        console.error("Error loading RSO events:", error.message);
     }
 }
+
+// async function loadRSOEvents() {
+//     try {
+//         const response = await fetch("/php/rsoEvent.php");
+//         const events = await response.json();
+
+//         const container = document.querySelector("section:nth-of-type(2) .grid") || createGrid("section:nth-of-type(2)");
+//         container.innerHTML = ""; // Clear existing cards
+
+//         events.forEach(event => {
+//             const card = document.createElement("div");
+//             card.classList.add("event-card");
+
+//             card.innerHTML = `
+//         <h3>${event.Name}</h3>
+//         <div class="event-type">${event.EventType} Event</div>
+//         <div class="event-details">
+//           <p><strong>Date:</strong> ${formatDate(event.Date)}</p>
+//           <p><strong>Start:</strong> ${formatTime(event.Start)}</p>
+//           <p><strong>End:</strong> ${formatTime(event.End)}</p>
+//           <p><strong>Location:</strong> ${event.Location}</p>
+//         </div>
+//         <p>${event.Description}</p>
+//         <div style="text-align: center; margin-top: 1rem;">
+//           <button class="btn" onclick="rateEvent('${event.Name}')">Rate</button>
+//           <button class="btn" onclick="commentEvent('${event.Name}')">Comment</button>
+//         </div>
+//       `;
+
+//             container.appendChild(card);
+//         });
+//     } catch (err) {
+//         console.error("Error loading RSO events:", err);
+//     }
+// }
 
 async function loadPrivateEvents(){}
 
