@@ -133,32 +133,6 @@ function readCookie(key) {
     return null; // Return null if the key is not found
 }
 
-// function readCookie() {
-//     userID = -1;
-//     let data = document.cookie;
-//     let splits = data.split(",");
-//     for (var i = 0; i < splits.length; i++) {
-//         let thisOne = splits[i].trim();
-//         let tokens = thisOne.split("=");
-//         if (tokens[0] == "Name") {
-//             userName = tokens[1];
-//         }
-//         else if (tokens[0] == "userID") {
-//             userID = tokens[1];
-//         }
-//         else if (tokens[0] == "UniversityID") {
-//             uniID = tokens[1];
-//         }
-//         else if (tokens[0] == "userType") {
-//             userType = parseInt(tokens[1].trim());
-//         }
-//     }
-
-//     if (userID < 0) {
-//         window.location.href = "index.html";
-//     }
-// }
-
 function promoteUser() {
     let email = document.getElementById("updateEmail").value;
     document.getElementById("updateResult").innerHTML = "";
@@ -322,7 +296,7 @@ async function loadRSOEvents(uid) {
     fetch("/api/Event/getRSOEvents.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ UID: userID })
+        body: JSON.stringify({ UID: uid })  
     })
         .then(res => res.json())
         .then(data => {
@@ -330,101 +304,6 @@ async function loadRSOEvents(uid) {
             displayEvents(rEvents, "rso-events");
         })
         .catch(err => console.error("❌ Failed to load RSO events:", err));
- 
-}
-
-/* 
-async function loadEvents(uid){
-    // Fetch the events for the user
-    let tmp = { UID: uid };
-    let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + '/Event/getRSOEvents.' + extension;
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-    try {
-        xhr.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                const data = JSON.parse(xhr.responseText);
-                const container = document.getElementById("rso-events");
-                container.innerHTML = ""; // Clear existing cards
-
-                console.log(data);
-                rEvents = data.rsoEvents;
-                rEvents.forEach(event => {
-                    const card = document.createElement("div");
-                    card.className = "event-card";
-                    card.innerHTML = `
-                <h3>${event.Name}</h3>
-                <div class="event-type">${event.EventType} Event</div>
-                <div class="event-details">
-                    <p><strong>Date:</strong> ${formatDate(event.Date)}</p>
-                    <p><strong>Start:</strong> ${formatTime(event.Start)}</p>
-                    <p><strong>End:</strong> ${formatTime(event.End)}</p>
-                    <p><strong>Location:</strong> ${event.Location}</p>
-                </div>
-                <p>${event.Description}</p>
-                <div style="text-align: center; margin-top: 1rem;">
-                    <button class="btn" onclick="rateEvent(${uid}, ${event.EventID})">Rate</button>
-                    <button class="btn" onclick="commentEvent(${uid}, ${event.EventID})">Comment</button>
-                </div>
-                `;
-                    container.appendChild(card);
-                });
-            }
-        };
-        xhr.send(jsonPayload);
-    }
-    catch (error) {
-        console.error("Error loading RSO events:", error.message);
-    }
-} */
-
-// async function loadRSOEvents() {
-//     try {
-//         const response = await fetch("/php/rsoEvent.php");
-//         const events = await response.json();
-
-//         const container = document.querySelector("section:nth-of-type(2) .grid") || createGrid("section:nth-of-type(2)");
-//         container.innerHTML = ""; // Clear existing cards
-
-//         events.forEach(event => {
-//             const card = document.createElement("div");
-//             card.classList.add("event-card");
-
-//             card.innerHTML = `
-//         <h3>${event.Name}</h3>
-//         <div class="event-type">${event.EventType} Event</div>
-//         <div class="event-details">
-//           <p><strong>Date:</strong> ${formatDate(event.Date)}</p>
-//           <p><strong>Start:</strong> ${formatTime(event.Start)}</p>
-//           <p><strong>End:</strong> ${formatTime(event.End)}</p>
-//           <p><strong>Location:</strong> ${event.Location}</p>
-//         </div>
-//         <p>${event.Description}</p>
-//         <div style="text-align: center; margin-top: 1rem;">
-//           <button class="btn" onclick="rateEvent('${event.Name}')">Rate</button>
-//           <button class="btn" onclick="commentEvent('${event.Name}')">Comment</button>
-//         </div>
-//       `;
-
-//             container.appendChild(card);
-//         });
-//     } catch (err) {
-//         console.error("Error loading RSO events:", err);
-//     }
-// }
-
-function loadPublicEvents() {
-    fetch("/api/Event/getPublicEvents.php")
-        .then(res => res.json())
-        .then(data => {
-            const pubEvents = data.public_events || [];
-            displayEvents(pubEvents, "public-events");
-        })
-        .catch(err => console.error("Failed to load public events:", err));
 }
 
 function loadPrivateEvents(userID) {
@@ -441,6 +320,15 @@ function loadPrivateEvents(userID) {
         .catch(err => console.error("Failed to load private events:", err));
 }
 
+function loadPublicEvents() {
+    fetch("/api/Event/getPublicEvents.php")
+        .then(res => res.json())
+        .then(data => {
+            const pubEvents = data.public_events || [];
+            displayEvents(pubEvents, "public-events");
+        })
+        .catch(err => console.error("Failed to load public events:", err));
+}
 
 function displayEvents(events, containerId) {
     const container = document.getElementById(containerId);
