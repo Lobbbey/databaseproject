@@ -1,3 +1,4 @@
+const { use } = require("express/lib/application");
 
 const urlBase = 'http://104.248.2.194/api'
 const extension = 'php';
@@ -34,7 +35,7 @@ function login() {
                 userName = jsonObject.Name;
                 userType = jsonObject.UserType;
                 uniID = jsonObject.University_ID;
-                saveCookie();
+                saveCookie(userID, userName, uniID, userType);
                 if (userType == "SuperAdmin") {
                     window.location.href = "SuperAdmin.html";
                 }
@@ -91,7 +92,7 @@ function signUp() {
                 userName = jsonObject.Name;
                 userType = jsonObject.UserType;
                 uniID = jsonObject.University_ID;
-                saveCookie();
+                saveCookie(userID, userName, uniID, userType);
                 if (userType == "SuperAdmin") {
                     window.location.href = "SuperAdmin.html";
                 }
@@ -110,7 +111,7 @@ function signUp() {
     }
 }
 
-function saveCookie() {
+function saveCookie(userID, userName, uniID, userType) {
     let minutes = 20;
     let date = new Date();
     date.setTime(date.getTime() + (minutes * 60 * 1000));
