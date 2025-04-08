@@ -17,6 +17,7 @@
   <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
       const userID = readCookie("userID");
+      console.log("User ID:", userID);
       loadUserRSOs(userID);
       loadRSOEvents();
       loadPrivateEvents();
