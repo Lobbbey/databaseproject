@@ -324,11 +324,11 @@ function leaveRSO(uid, rsoid) {
         body: JSON.stringify({ UID: uid, RSOID: rsoid })
     }).then(() => loadUserRSOs(uid));
 }
-async function loadRSOEvents(uid){
+async function loadEvents(uid){
     // Fetch the RSO events for the user
     let tmp = { UID: uid };
     let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + '/Event/getRsoEvents.' + extension;
+    let url = urlBase + '/Event/getEvents.' + extension;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -342,8 +342,8 @@ async function loadRSOEvents(uid){
                 container.innerHTML = ""; // Clear existing cards
 
                 console.log(data);
-                events = data.rsoEvents;
-                events.forEach(event => {
+                rEvents = data.rsoEvents;
+                rEvents.forEach(event => {
                     const card = document.createElement("div");
                     card.className = "event-card";
                     card.innerHTML = `
