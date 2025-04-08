@@ -247,6 +247,7 @@ async function loadUserRSOs(uid) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UID: uid })
     });
+    console.log(response);
     const data = await response.json();
 
     const joinContainer = document.getElementById("available-rsos");
