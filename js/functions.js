@@ -328,7 +328,7 @@ async function loadRSOEvents(uid){
     // Fetch the RSO events for the user
     let tmp = { UID: uid };
     let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + '/RSO/getRsoEvents.' + extension;
+    let url = urlBase + '/Event/getRsoEvents.' + extension;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
