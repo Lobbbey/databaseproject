@@ -3,19 +3,27 @@ header('Content-Type: application/json');
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+// Parse input
 $inData = json_decode(file_get_contents('php://input'), true);
 $UID = isset($inData["UID"]) ? intval($inData["UID"]) : 0;
 
-$conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
-if ($conn->connect_error) {
-    echo json_encode(["error" => "Connection failed"]);
+if ($UID <= 0) {
+    echo json_encode(["error" => "Invalid UID"]);
     exit();
 }
 
+// Connect to DB
+$conn = new mysqli("localhost", "APIUser", "Password", "EventManagement");
+if ($conn->connect_error) {
+    echo json_encode(["error" => "Database connection failed"]);
+    exit();
+}
+
+// Fetch RSO events where user is a member
 $sql = "
     SELECT E.*
     FROM Events E
-    INNER JOIN RSO_Members RM ON E.RSOID = RM.RSOID
+    JOIN RSO_Members RM ON E.RSOID = RM.RSOID
     WHERE E.EventType = 'RSO' AND RM.UID = ?
 ";
 
@@ -29,7 +37,9 @@ while ($row = $result->fetch_assoc()) {
     $events[] = $row;
 }
 
-echo json_encode(["events" => $events]);
 $stmt->close();
 $conn->close();
+
+// Output wrapped result
+echo json_encode(["rEvents" => $events]);
 ?>

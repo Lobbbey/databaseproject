@@ -324,6 +324,21 @@ function leaveRSO(uid, rsoid) {
     }).then(() => loadUserRSOs(uid));
 }
 
+async function loadEvents(uid) {
+    fetch("/php/getRSOEvents.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ UID: userID })
+    })
+        .then(res => res.json())
+        .then(data => {
+            const rEvents = data.rEvents || [];
+            displayEvents(rEvents, "rso-events");
+        })
+        .catch(err => console.error("❌ Failed to load RSO events:", err));
+ 
+}
+/* 
 async function loadEvents(uid){
     // Fetch the events for the user
     let tmp = { UID: uid };
@@ -370,7 +385,7 @@ async function loadEvents(uid){
     catch (error) {
         console.error("Error loading RSO events:", error.message);
     }
-}
+} */
 
 // async function loadRSOEvents() {
 //     try {
