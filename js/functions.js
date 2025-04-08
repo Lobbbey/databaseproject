@@ -202,7 +202,7 @@ async function createEventAdmin(){
         Description: document.getElementById("eventDescription").value,
         Time: document.getElementById("eventTime").value,
         Date: document.getElementById("eventDate").value,
-        EventType: document.querySelector("eventType").value,
+        EventType: document.getElementById("eventType").value,
         RSOID: document.getElementById("eventRSOorUni").value,
         Location: document.getElementById("eventLocation").value,
         Phone: document.getElementById("eventPhone").value,
