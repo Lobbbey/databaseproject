@@ -328,7 +328,7 @@ async function loadEvents(uid){
     // Fetch the events for the user
     let tmp = { UID: uid };
     let jsonPayload = JSON.stringify(tmp);
-    let url = urlBase + '/Event/getEvents.' + extension;
+    let url = urlBase + '/Event/getRSOEvents.' + extension;
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", url, true);
@@ -407,9 +407,73 @@ async function loadEvents(uid){
 //     }
 // }
 
-async function loadPrivateEvents(){}
+async function loadPublicEvents(){
+     try {
+    const res = await fetch("/api/Events/getPublicEvents.php");
+    const data = await res.json();
 
-async function loadPublicEvents(){}
+    if (data.error) {
+      console.error(data.error);
+      return;
+    }
+
+    displayEvents(data.public_events, "public-events");
+  } catch (err) {
+    console.error("Error loading public events:", err);
+  }
+}
+
+async function loadPrivateEvents(){
+    const uid = readCookie("userID");
+    if (!uid) {
+        console.error("User ID not found in cookie.");
+        return;
+    }
+
+    try {
+        const res = await fetch("/php/getPrivateEvents.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ UID: uid })
+        });
+
+        const data = await res.json();
+        if (data.error) {
+            console.error(data.error);
+            return;
+        }
+
+        displayEvents(data.private_events, "private-events");
+    } catch (err) {
+        console.error("Error loading private events:", err);
+    }
+}
+
+
+function displayEvents(events, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    events.forEach(event => {
+        const card = document.createElement("div");
+        card.className = "event-card";
+        card.innerHTML = `
+      <h3>${event.Name}</h3>
+      <div class="event-type">${event.EventType} Event</div>
+      <div class="event-details">
+        <p><strong>Date:</strong> ${formatDate(event.Date)}</p>
+        <p><strong>Time:</strong> ${formatTime(event.Time)}</p>
+        <p><strong>Location:</strong> ${event.Lname}</p>
+        <p><strong>Phone:</strong> ${event.Phone}</p>
+        <p><strong>Email:</strong> ${event.Email}</p>
+      </div>
+      <p>${event.Description}</p>
+    `;
+        container.appendChild(card);
+    });
+}
 
 function formatDate(dateStr) {
     const options = { year: "numeric", month: "long", day: "numeric" };
