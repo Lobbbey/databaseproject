@@ -66,10 +66,10 @@ function signUp() {
     let email = document.getElementById("signUpEmail").value;
     let password = document.getElementById("signUpPassword").value;
     let usertype = document.getElementById("signUpUserType").value;
-    let uni = document.getElementById("signUpUni").value;
+    let university = document.getElementById("signUpUni").value;
     document.getElementById("signupRes").innerHTML = "";
 
-    let tmp = { Name: name, Email: email, Password: password, UserType: usertype, University: uni};
+    let tmp = { Name: name, Email: email, Password: password, UserType: usertype, University: university};
     let jsonPayload = JSON.stringify(tmp);
     let url = urlBase + '/User/signup.' + extension;
 

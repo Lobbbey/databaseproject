@@ -12,7 +12,7 @@
         returnWithError("error: Could not connect to database");
     }
     else{
-        $uniStmt = $conn->prepare("SELECT University_ID FROM Universities WHERE Name = ?");
+        $uniStmt = $conn->prepare("SELECT University_ID FROM University WHERE Name = ?");
         $uniStmt->bind_param("s", $UniversityName);
         $uniStmt->execute();
         $uniResult = $uniStmt->get_result();
