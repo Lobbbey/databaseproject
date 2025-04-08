@@ -6,9 +6,9 @@ error_reporting(E_ALL);
 
 // Read JSON input
 $rawInput = file_get_contents('php://input');
-error_log("Raw Input: " . $rawInput); // Logs the raw input to the server's error log
 $inData = json_decode($rawInput, true);
-$UID = isset($inData["UID"]) ? intval($inData["UID"]) : 0;
+//$UID = isset($inData["UID"]) ? intval($inData["UID"]) : 0;
+$UID = $inData["UID"] ?? 0; // Use null coalescing operator to set default value
 if ($UID <= 0) {
     echo json_encode(["error" => "Invalid or missing UID."]);
     echo json_encode(["debug raw input" => $rawInput]); // Log the input data for debugging

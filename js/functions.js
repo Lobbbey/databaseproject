@@ -242,44 +242,55 @@ function createEvent() {}
 async function loadUserRSOs(uid) {
     // Fetch the available and joined RSOs for the user
 
-    const response = await fetch("/api/RSO/getRSO.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ UID: uid })
-    });
-    console.log(response);
-    const data = await response.json();
+    let jsonPayload = JSON.stringify(uid);
+    let url = urlBase + '/RSO/getRSO.' + extension;
 
-    const joinContainer = document.getElementById("available-rsos");
-    const joinedContainer = document.getElementById("joined-rsos");
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-    joinContainer.innerHTML = "";
-    joinedContainer.innerHTML = "";
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+                const joinContainer = document.getElementById("available-rsos");
+                const joinedContainer = document.getElementById("joined-rsos");
 
-    console.log(data);
-    // Available RSOs
-    data.available_rsos.forEach(rso => {
-        const rsoCard = document.createElement("div");
-        rsoCard.className = "event-card";
-        rsoCard.innerHTML = `
-      <h3>${rso.Name}</h3>
-      <p>${rso.Description}</p>
-      <button class="btn" onclick="joinRSO(${uid}, ${rso.RSOID})">Join</button>
-    `;
-        joinContainer.appendChild(rsoCard);
-    });
+                joinContainer.innerHTML = "";
+                joinedContainer.innerHTML = "";
 
-    // Joined RSOs
-    data.joined_rsos.forEach(rso => {
-        const rsoCard = document.createElement("div");
-        rsoCard.className = "event-card";
-        rsoCard.innerHTML = `
-      <h3>${rso.Name}</h3>
-      <p>${rso.Description}</p>
-      <button class="btn" onclick="leaveRSO(${uid}, ${rso.RSOID})">Leave</button>
-    `;
-        joinedContainer.appendChild(rsoCard);
-    });
+                console.log(data);
+                // Available RSOs
+                data.available_rsos.forEach(rso => {
+                    const rsoCard = document.createElement("div");
+                    rsoCard.className = "event-card";
+                    rsoCard.innerHTML = `
+                <h3>${rso.Name}</h3>
+                <p>${rso.Description}</p>
+                <button class="btn" onclick="joinRSO(${uid}, ${rso.RSOID})">Join</button>
+                `;
+                    joinContainer.appendChild(rsoCard);
+                });
+
+                // Joined RSOs
+                data.joined_rsos.forEach(rso => {
+                    const rsoCard = document.createElement("div");
+                    rsoCard.className = "event-card";
+                    rsoCard.innerHTML = `
+                <h3>${rso.Name}</h3>
+                <p>${rso.Description}</p>
+                <button class="btn" onclick="leaveRSO(${uid}, ${rso.RSOID})">Leave</button>
+                `;
+                    joinedContainer.appendChild(rsoCard);
+                });
+            }
+        };
+        xhr.send(jsonPayload);
+    }
+    catch (error) {
+        console.error("Error loading RSOs:", error.message);
+    }
+    
 }
 
 function joinRSO(uid, rsoid) {
