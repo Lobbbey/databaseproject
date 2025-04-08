@@ -6,8 +6,8 @@ error_reporting(E_ALL);
 
 // Read JSON input
 $inData = json_decode(file_get_contents('php://input'), true);
-$UID = isset($inData["UID"]) ? intval($inData["UID"]) : 0;
-
+//$UID = isset($inData["UID"]) ? intval($inData["UID"]) : 0;
+$UID = $inData["UID"] ?? 0; // Use null coalescing operator to set default value
 if ($UID <= 0) {
     echo json_encode(["error" => "Invalid or missing UID."]);
     exit();
