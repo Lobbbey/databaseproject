@@ -196,7 +196,7 @@ function adminCreateUser() {
 
 async function createEventAdmin(){
 
-    const event = {
+    const eventData = {
         Name: document.getElementById("eventName").value,
         Catagory: document.getElementById("eventCatagory").value,
         Description: document.getElementById("eventDescription").value,
@@ -209,26 +209,23 @@ async function createEventAdmin(){
         Email: document.getElementById("eventEmail").value
     };
 
-    try {
-        const response = await fetch("/api/Event/create.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(event)
-        });
+    fetch("/api/Event/create.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(eventData)
+    })
+        .then(res => res.text())
+        .then(text => {
+            console.log("📦 Raw response:", text);
+            const data = JSON.parse(text);
+            if (data.result === "success") {
+                alert("✅ Event created successfully!");
+            } else {
+                alert("❌ Failed: " + data.result);
+            }
+        })
+        .catch(err => console.error("❌ Error creating event:", err));
 
-        const data = await response.json();
-
-        if (data.result === "success") {
-            alert("✅ Event created successfully!");
-            document.querySelector("form").reset();
-        } else {
-            console.error("❌ Server response:", data);
-            alert("Failed to create event: " + (data.result || "Unknown error."));
-        }
-    } catch (error) {
-        console.error("❌ Error creating event:", error);
-        alert("Error submitting event.");
-    }
 }
 
 function createRSO() {
