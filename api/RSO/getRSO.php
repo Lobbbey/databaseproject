@@ -11,6 +11,7 @@ $inData = json_decode($rawInput, true);
 $UID = isset($inData["UID"]) ? intval($inData["UID"]) : 0;
 if ($UID <= 0) {
     echo json_encode(["error" => "Invalid or missing UID."]);
+    echo json_encode(["debug raw input" => $rawInput]); // Log the input data for debugging
     exit();
 }
 
