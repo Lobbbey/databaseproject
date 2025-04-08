@@ -1,5 +1,3 @@
-
-
 const urlBase = 'http://104.248.2.194/api'
 const extension = 'php';
 
@@ -318,7 +316,7 @@ function joinRSO(uid, rsoid) {
 }
 
 function leaveRSO(uid, rsoid) {
-    fetch("/php/RSO/leave.php", {
+    fetch("/api/RSO/leave.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UID: uid, RSOID: rsoid })
