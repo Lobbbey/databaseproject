@@ -384,9 +384,43 @@ function displayEvents(events, containerId) {
         <p><strong>Email:</strong> ${event.Email}</p>
       </div>
       <p>${event.Description}</p>
+        <button class="btn" onclick="loadEventComments(${event.EventID})">View Comments</button>
     `;
         container.appendChild(card);
+        const commentsContainer = document.createElement("div");
+        commentsContainer.id = `comments-${event.EventID}`;
+        commentsContainer.className = "comments-container";
+        card.appendChild(commentsContainer);
+        loadEventComments(event.EventID, `comments-${event.EventID}`);
     });
+}
+
+function loadEventComments(eventID, containerId) {
+    fetch("/api/Event/getComments.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ EventID: eventID })
+    })
+        .then(res => res.json())
+        .then(data => {
+            const comments = data.comments || [];
+            const commentsContainer = document.getElementById(containerId);
+            if (!commentsContainer) return;
+            comments.forEach(comment => {
+                const commentCard = document.createElement("div");
+                commentCard.className = "comment-card";
+                commentCard.innerHTML = `
+            <h4>${comment.UserName}</h4>
+            <p>${comment.Comment}</p>
+            <p><strong>Date:</strong> ${formatDate(comment.Date)}</p>
+            <p><strong>Time:</strong> ${formatTime(comment.Time)}</p>
+            `;
+                commentsContainer.appendChild(commentCard);
+            })
+            if (comments.length === 0) {
+                commentsContainer.innerHTML = "<p>No comments available for this event.</p>";
+            }
+        });
 }
 
 function formatDate(dateStr) {
