@@ -405,6 +405,7 @@ function loadEventComments(eventID, containerId) {
         .then(res => res.json()) 
         {
             const comments = res.comments || [];
+            console.log("Comments:", comments);
             const commentsContainer = document.getElementById(containerId);
             if (!commentsContainer) return;
             comments.forEach(comment => {
