@@ -325,7 +325,7 @@ function leaveRSO(uid, rsoid) {
 }
 
 async function loadEvents(uid) {
-    fetch("/php/getRSOEvents.php", {
+    fetch("/api/Event/getRSOEvents.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UID: userID })
@@ -338,6 +338,7 @@ async function loadEvents(uid) {
         .catch(err => console.error("❌ Failed to load RSO events:", err));
  
 }
+
 /* 
 async function loadEvents(uid){
     // Fetch the events for the user
