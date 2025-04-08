@@ -195,8 +195,8 @@ function adminCreateUser() {
 }
 
 async function createEventAdmin(){
+
     const event = {
-        UID: userID,
         Name: document.getElementById("eventName").value,
         Catagory: document.getElementById("eventCatagory").value,
         Description: document.getElementById("eventDescription").value,
