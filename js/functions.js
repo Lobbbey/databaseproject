@@ -397,6 +397,7 @@ function displayEvents(events, containerId) {
 
 function loadEventComments(eventID, containerId) {
     console.log("Loading comments for event ID:", eventID);
+
     fetch("/api/Comment/getComments.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -414,7 +415,7 @@ function loadEventComments(eventID, containerId) {
                 const commentCard = document.createElement("div");
                 commentCard.className = "comment-card";
                 commentCard.innerHTML = `
-            <h4>${comment.User_ID}</h4>
+            <h4>${getUserName(comment.User_ID)}</h4>
             <p>${comment.CommentText}</p>
             <p><strong>Time:</strong> ${comment.Timestamp}</p>
             `;
@@ -424,6 +425,20 @@ function loadEventComments(eventID, containerId) {
                 commentsContainer.innerHTML = "<p>No comments available for this event.</p>";
             }
         });
+}
+
+function getUserName(User_ID){
+    fetch("/api/User/getUserName.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ UID: User_ID })
+    })
+        .then(res => res.json())
+        .then(data => {
+            const userName = data.Name || "Unknown User";
+            return userName;
+        })
+        .catch(err => console.error("Failed to get user name:", err));
 }
 
 function formatDate(dateStr) {
