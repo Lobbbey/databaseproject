@@ -194,7 +194,7 @@ function adminCreateUser() {
     }
 }
 
-async function createEvent(){
+async function createEventAdmin(){
     const event = {
         UID: userID,
         Name: document.getElementById("eventName").value,
@@ -228,6 +228,7 @@ async function createEvent(){
 
         if (data.result === "success") {
             alert("✅ Event created successfully!");
+            document.querySelector("form").reset();
         } else {
             console.error("❌ Server response:", data);
             alert("Failed to create event: " + (data.result || "Unknown error."));

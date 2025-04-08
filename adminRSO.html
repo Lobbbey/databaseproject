@@ -198,16 +198,6 @@
       </p>
     </section>
 
-    <!-- (Optional) Filter Dropdown for RSOs by University -->
-    <section style="text-align: center; margin-bottom: 2rem;">
-      <select id="universityFilter" class="form-select filter-dropdown">
-        <option value="all">All Universities</option>
-        <option value="uni1">University of Example</option>
-        <option value="uni2">Example State University</option>
-        <!-- Add more options as needed -->
-      </select>
-    </section>
-
     <!-- Create New User -->
     <section class="card" style="max-width: 600px; margin: 0 auto 2rem auto;">
       <h3 class="text-2xl mb-6 text-center">Create User</h3>
@@ -256,7 +246,7 @@
         <input type="text" id="eventLocation" placeholder="Location" required class="form-input">
         <input type="tel" id="eventPhone" placeholder="Phone Number" required class="form-input">
         <input type="email" id="eventEmail" placeholder="Email" required class="form-input">
-        <button type="button" onclick="createEvent()" class="btn font-semibold">Create Event</button>
+        <button type="button" onclick="createEventAdmin()" class="btn font-semibold">Create Event</button>
       </form>
     </section>
 
