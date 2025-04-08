@@ -239,7 +239,9 @@ function leaveRSO(){}
 function createEvent() {}
 
 async function loadUserRSOs(uid) {
-    const response = await fetch("/php/RSO/getRSO.php", {
+    // Fetch the available and joined RSOs for the user
+
+    const response = await fetch("/api/RSO/getRSO.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UID: uid })
