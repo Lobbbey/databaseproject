@@ -396,7 +396,7 @@ function displayEvents(events, containerId) {
 }
 
 function loadEventComments(eventID, containerId) {
-    fetch("/api/Event/getComments.php", {
+    fetch("/api/Comment/getComments.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ EventID: eventID })
