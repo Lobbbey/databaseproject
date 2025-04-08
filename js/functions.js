@@ -115,34 +115,50 @@ function saveCookie(userID, userName, uniID, userType) {
     let minutes = 20;
     let date = new Date();
     date.setTime(date.getTime() + (minutes * 60 * 1000));
-    document.cookie = "Name=" + userName + ",userID=" + userID + ",UniversityID=" + uniID + ",userType=" + userType + ";expires=" + date.toGMTString();
+    const expires = "expires=" + date.toGMTString();
+
+    document.cookie = `Name=${userName}; ${expires}; path=/`;
+    document.cookie = `userID=${userID}; ${expires}; path=/`;
+    document.cookie = `UniversityID=${uniID}; ${expires}; path=/`;
+    document.cookie = `userType=${userType}; ${expires}; path=/`;
 }
 
-function readCookie() {
-    userID = -1;
-    let data = document.cookie;
-    let splits = data.split(",");
-    for (var i = 0; i < splits.length; i++) {
-        let thisOne = splits[i].trim();
-        let tokens = thisOne.split("=");
-        if (tokens[0] == "Name") {
-            userName = tokens[1];
-        }
-        else if (tokens[0] == "userID") {
-            userID = tokens[1];
-        }
-        else if (tokens[0] == "UniversityID") {
-            uniID = tokens[1];
-        }
-        else if (tokens[0] == "userType") {
-            userType = parseInt(tokens[1].trim());
+function readCookie(key) {
+    const cookies = document.cookie.split(";"); // Split cookies by semicolon
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim(); // Remove leading/trailing spaces
+        const [cookieKey, cookieValue] = cookie.split("="); // Split key and value
+        if (cookieKey === key) {
+            return cookieValue; // Return the value if the key matches
         }
     }
-
-    if (userID < 0) {
-        window.location.href = "index.html";
-    }
+    return null; // Return null if the key is not found
 }
+// function readCookie() {
+//     userID = -1;
+//     let data = document.cookie;
+//     let splits = data.split(",");
+//     for (var i = 0; i < splits.length; i++) {
+//         let thisOne = splits[i].trim();
+//         let tokens = thisOne.split("=");
+//         if (tokens[0] == "Name") {
+//             userName = tokens[1];
+//         }
+//         else if (tokens[0] == "userID") {
+//             userID = tokens[1];
+//         }
+//         else if (tokens[0] == "UniversityID") {
+//             uniID = tokens[1];
+//         }
+//         else if (tokens[0] == "userType") {
+//             userType = parseInt(tokens[1].trim());
+//         }
+//     }
+
+//     if (userID < 0) {
+//         window.location.href = "index.html";
+//     }
+// }
 
 function promoteUser() {
     let email = document.getElementById("updateEmail").value;
