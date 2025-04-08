@@ -384,7 +384,7 @@ function displayEvents(events, containerId) {
         <p><strong>Email:</strong> ${event.Email}</p>
       </div>
       <p>${event.Description}</p>
-        <h4 class="">Comments</h4>
+        <h4 class="pt-3">Comments</h4>
     `;
         container.appendChild(card);
         const commentsContainer = document.createElement("div");
@@ -415,7 +415,7 @@ async function loadEventComments(eventID, containerId) {
                 const commentCard = document.createElement("div");
                 commentCard.className = "comment-card";
                 commentCard.innerHTML = `
-            <h4 class='text-left'>${await getUserName(comment.User_ID)}</h4>
+            <div class='font-bold'>${await getUserName(comment.User_ID)}</div>
             <p>${comment.CommentText}</p>
             <p><strong>Time:</strong> ${comment.Timestamp}</p>
             `;
