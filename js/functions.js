@@ -428,17 +428,19 @@ async function loadEventComments(eventID, containerId) {
 }
 
 async function getUserName(User_ID){
-    fetch("/api/User/getUserName.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ UID: User_ID })
-    })
-        .then(res => res.json())
-        .then(data => {
-            const userName = data.Name || "Unknown User";
-            return userName;
-        })
-        .catch(err => console.error("Failed to get user name:", err));
+    try {
+        const response = await fetch("/api/User/getUserName.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ UID: User_ID })
+        });
+        const data = await response.json();
+        return data.Name || "Unknown User"; // Return the userName properly
+    } catch (err) {
+        console.error("Failed to get user name:", err);
+        return "Unknown User"; // Return a fallback value in case of an error
+    }
+        
 }
 
 function formatDate(dateStr) {
