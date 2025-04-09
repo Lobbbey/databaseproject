@@ -381,9 +381,63 @@ function displayEvents(events, containerId) {
         <p><strong>Email:</strong> ${event.Email}</p>
       </div>
       <p>${event.Description}</p>
+        <h4 class="!pt-3">Comments</h4>
     `;
         container.appendChild(card);
+        const commentsContainer = document.createElement("div");
+        commentsContainer.id = `comments-${event.Event_ID}`;
+        commentsContainer.className = "comments-container";
+        card.appendChild(commentsContainer);
+        loadEventComments(event.Event_ID, `comments-${event.Event_ID}`);
     });
+}
+
+async function loadEventComments(eventID, containerId) {
+    console.log("Loading comments for event ID:", eventID);
+
+    fetch("/api/Comment/getComments.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ EventID: eventID })
+    })
+
+        .then(res => res.json()) 
+        .then(data => {
+            console.log("Comments data:", data);
+            const comments = data.comments || []; 
+            console.log("Comments:", comments);
+            const commentsContainer = document.getElementById(containerId);
+            if (!commentsContainer) return;
+            comments.forEach(async comment => {
+                const commentCard = document.createElement("div");
+                commentCard.className = "comment-card";
+                commentCard.innerHTML = `
+            <div class='font-bold'>${await getUserName(comment.User_ID)}</div>
+            <p>${comment.CommentText}</p>
+            <p><strong>Time:</strong> ${comment.Timestamp}</p>
+            `;
+                commentsContainer.appendChild(commentCard);
+            })
+            if (comments.length === 0) {
+                commentsContainer.innerHTML = "<p>No comments available for this event.</p>";
+            }
+        });
+}
+
+async function getUserName(User_ID){
+    try {
+        const response = await fetch("/api/User/getUserName.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ UID: User_ID })
+        });
+        const data = await response.json();
+        return data.Name || "Unknown User"; // Return the userName properly
+    } catch (err) {
+        console.error("Failed to get user name:", err);
+        return "Unknown User"; // Return a fallback value in case of an error
+    }
+        
 }
 
 function formatDate(dateStr) {
