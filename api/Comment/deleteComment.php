@@ -35,7 +35,7 @@ if ($comment) {
 $findComment->close();
 
 $deleteComment = $conn->prepare("
-    DELETE FROM Comments WHERE Comment_ID = ?");
+    DELETE FROM Comments WHERE CommentID = ?");
 $deleteComment->bind_param("i", $CommentID);
 $deleteComment->execute();
 $deleteComment->close();
