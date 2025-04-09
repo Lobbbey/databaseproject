@@ -26,11 +26,11 @@ $findCommentResult = $findComment->get_result();
 
 $comment = $findCommentResult->fetch_assoc()["Event_ID", "User_ID"] ?? null;
 $findComment->close();
-echo json_encode(["comment" => $comment]);
 
 $deleteComment = $conn->prepare("
     DELETE FROM Comments WHERE Comment_ID = ?");
 $deleteComment->bind_param("i", $CommentID);
 $deleteComment->execute();
 $deleteComment->close();
+echo json_encode(["comment" => $comment]);
 $conn->close();
