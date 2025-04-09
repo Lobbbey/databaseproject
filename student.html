@@ -17,6 +17,12 @@
   <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
       const userID = readCookie("userID");
+      const name = readCookie("Name");
+
+      const welcomeMessage = document.querySelector(".welcome-message");
+      if (welcomeMessage && name) {
+        welcomeMessage.textContent = `Welcome, ${name}`;
+      }
       loadUserRSOs(userID);
       loadRSOEvents(userID);       // Events from your RSOs
       loadPrivateEvents(userID);   // Private university events
@@ -177,7 +183,7 @@
   <main class="container">
     <!-- Hero Section -->
     <section style="text-align: center; margin-bottom: 2rem;">
-      <h2 class="text-3xl">Welcome, [Student Name]</h2>
+      <h2 class="text-3xl welcome-message">Welcome, User </h2>
       <p class="text-lg" style="max-width: 600px; margin: 0 auto;">
         View public events, private university events, and RSO events. Comment, and join the conversation.
       </p>
