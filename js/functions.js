@@ -313,6 +313,7 @@ function joinRSO(uid, rsoid) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UID: uid, RSOID: rsoid })
     }).then(() => loadUserRSOs(uid));
+    loadRSOEvents(uid);
 }
 
 function leaveRSO(uid, rsoid) {
@@ -321,6 +322,7 @@ function leaveRSO(uid, rsoid) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ UID: uid, RSOID: rsoid })
     }).then(() => loadUserRSOs(uid));
+    loadRSOEvents(uid);
 }
 
 async function loadRSOEvents(uid) {
@@ -501,6 +503,7 @@ async function loadEventComments(eventID, containerId, userID) {
             }
         });
 }
+
 function editComment(commentID) {
     const commentCard = document.querySelector(`[data-comment-id="${commentID}"]`);
     if (!commentCard) return;
@@ -565,7 +568,6 @@ async function cancelEdit(commentID, originalText) {
     `;
 }
 
-
 function deleteComment(commentID) {
     fetch("/api/Comment/deleteComment.php", {
         method: "POST",
@@ -588,6 +590,7 @@ function deleteComment(commentID) {
         .catch(err => console.error("Failed to delete comment:", err));
    
 }
+
 async function getUserName(User_ID){
     try {
         const response = await fetch("/api/User/getUserName.php", {
