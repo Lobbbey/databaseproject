@@ -411,6 +411,7 @@ async function loadEventComments(eventID, containerId, userID) {
             comments.forEach(async comment => {
                 const commentCard = document.createElement("div");
                 commentCard.className = "comment-card";
+                commentCard.setAttribute("data-comment-id", comment.CommentID); // Set a data attribute for easy access
                 commentCard.innerHTML = `
             <div class='font-bold'>${await getUserName(comment.User_ID)}</div>
             <p>${comment.CommentText}</p>
@@ -436,9 +437,18 @@ function deleteComment(commentID) {
         .then(res => res.json())
         .then(data => {
             console.log("Comment deleted:", data);
-            loadEventComments(data.Event_ID, `comments-${data.Event_ID}`, data.User_ID);
+
+            // Remove the comment from the DOM
+            const commentCard = document.querySelector(`[data-comment-id="${commentID}"]`);
+            if (commentCard) {
+                commentCard.remove();
+            }
+
+            // Optionally reload comments for the event
+            // loadEventComments(data.Event_ID, `comments-${data.Event_ID}`, data.User_ID);
         })
         .catch(err => console.error("Failed to delete comment:", err));
+   
 }
 async function getUserName(User_ID){
     try {
