@@ -257,6 +257,11 @@
         <input type="text" id="rsoName" placeholder="RSO Name" required class="form-input">
         <input type="text" id="uniID" placeholder="University ID" required class="form-input">
         <textarea id="rsoDescription" placeholder="RSO Description" rows="3" required class="form-textarea"></textarea>
+        <p class="text-right">Need Five Additional Members With the Same Email Domain</p>
+        <textarea id="addMem1" placeholder="Additional Member One" class="form-input" required></textarea>
+        <textarea id="addMem2" placeholder="Additional Member Two" class="form-input" required></textarea>
+        <textarea id="addMem3" placeholder="Additional Member Three" class="form-input" required></textarea>
+        <textarea id="addMem4" placeholder="Additional Member Four" class="form-input" required></textarea>
         <button type="button" onclick="createRSO()" class="btn font-semibold">Create RSO</button>
         <p id="rsoRES" class="mt-3 text-sm text-center"></p>
       </form>
@@ -280,6 +285,7 @@
             <button class="btn" onclick="deleteRSO('Chess Club')">Delete</button>
           </div>
         </div>
+
         <!-- RSO Card 2 -->
         <div class="card">
           <h3>Robotics Team</h3>
@@ -294,6 +300,7 @@
             <button class="btn" onclick="deleteRSO('Robotics Team')">Delete</button>
           </div>
         </div>
+
         <!-- RSO Card 3 -->
         <div class="card">
           <h3>Debate Society</h3>
