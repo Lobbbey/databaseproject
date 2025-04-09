@@ -388,8 +388,73 @@ function displayEvents(events, containerId, userID) {
         commentsContainer.id = `comments-${event.Event_ID}`;
         commentsContainer.className = "comments-container";
         card.appendChild(commentsContainer);
+
+        const addCommentButton = document.createElement("button");
+        addCommentButton.className = "btn add-comment-btn";
+        addCommentButton.textContent = "Add Comment";
+        addCommentButton.onclick = () => showAddCommentForm(event.Event_ID, userID, commentsContainer.id);
+        card.appendChild(addCommentButton);
+
         loadEventComments(event.Event_ID, `comments-${event.Event_ID}`, userID);
     });
+}
+
+function showAddCommentForm(eventID, userID, containerId) {
+    const commentsContainer = document.getElementById(containerId);
+    if (!commentsContainer) return;
+
+    // Create the form
+    const form = document.createElement("div");
+    form.className = "add-comment-form";
+    form.innerHTML = `
+        <textarea class="add-comment-textarea" placeholder="Write your comment..."></textarea>
+        <button class="btn save-comment-btn" onclick="submitComment(${eventID}, ${userID}, '${containerId}')">Submit</button>
+        <button class="btn cancel-comment-btn" onclick="cancelAddComment('${containerId}')">Cancel</button>
+    `;
+
+    // Append the form to the comments container
+    commentsContainer.appendChild(form);
+}
+
+function submitComment(eventID, userID, containerId) {
+    const commentsContainer = document.getElementById(containerId);
+    if (!commentsContainer) return;
+
+    const textarea = commentsContainer.querySelector(".add-comment-textarea");
+    if (!textarea) return;
+
+    const commentText = textarea.value.trim();
+    if (!commentText) {
+        alert("Comment cannot be empty.");
+        return;
+    }
+
+    // Send the comment to the server
+    fetch("/api/Comment/createComment.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ Event_ID: eventID, User_ID: userID, Comment_Text: commentText })
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Reload comments for the event
+                loadEventComments(eventID, containerId, userID);
+            } else {
+                console.error("Failed to add comment:", data.error);
+            }
+        })
+        .catch(err => console.error("Failed to submit comment:", err));
+}
+
+function cancelAddComment(containerId) {
+    const commentsContainer = document.getElementById(containerId);
+    if (!commentsContainer) return;
+
+    const form = commentsContainer.querySelector(".add-comment-form");
+    if (form) {
+        form.remove();
+    }
 }
 
 async function loadEventComments(eventID, containerId, userID) {
