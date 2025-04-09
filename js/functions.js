@@ -428,6 +428,48 @@ async function loadEventComments(eventID, containerId, userID) {
             }
         });
 }
+function editComment(commentID) {
+    const commentCard = document.querySelector(`[data-comment-id="${commentID}"]`);
+    if (!commentCard) return;
+
+    const commentText = commentCard.querySelector("p").innerText;
+    const editInput = document.createElement("input");
+    editInput.type = "text";
+    editInput.value = commentText;
+    commentCard.innerHTML = ""; // Clear the card content
+    commentCard.appendChild(editInput);
+
+    const saveButton = document.createElement("button");
+    saveButton.innerText = "Save";
+    saveButton.className = "btn";
+    saveButton.onclick = () => saveComment(commentID, editInput.value, commentCard);
+    commentCard.appendChild(saveButton);
+}
+function saveComment(commentID, newText, commentCard) {
+    fetch("/api/Comment/editComment.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ Comment_ID: commentID, CommentText: newText })
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log("Comment updated:", data);
+            commentCard.innerHTML = `
+                <div class='font-bold'>${data.UserName}</div>
+                <p>${newText}</p>
+                <p><strong>Time:</strong> ${data.Timestamp}</p>
+            `;
+            const deleteButton = document.createElement("button");
+            deleteButton.innerText = "Delete";
+            deleteButton.className = "btn";
+            deleteButton.onclick = () => deleteComment(commentID);
+            commentCard.appendChild(deleteButton);
+        })
+        .catch(err => console.error("Failed to update comment:", err));
+}
+
+
+
 function deleteComment(commentID) {
     fetch("/api/Comment/deleteComment.php", {
         method: "POST",
