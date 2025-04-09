@@ -440,6 +440,10 @@ function submitComment(eventID, userID, containerId) {
             if (data.success) {
                 // Reload comments for the event
                 loadEventComments(eventID, containerId, userID);
+                const form = commentsContainer.querySelector(".add-comment-form");
+                if (form) {
+                    form.remove();
+                }
             } else {
                 console.error("Failed to add comment:", data.error);
             }
@@ -471,8 +475,12 @@ async function loadEventComments(eventID, containerId, userID) {
             console.log("Comments data:", data);
             const comments = data.comments || []; 
             console.log("Comments:", comments);
+
             const commentsContainer = document.getElementById(containerId);
             if (!commentsContainer) return;
+
+            commentsContainer.innerHTML = "";
+
             comments.forEach(async comment => {
                 const commentCard = document.createElement("div");
                 commentCard.className = "comment-card";
