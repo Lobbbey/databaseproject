@@ -186,6 +186,7 @@ function adminCreateUser() {
                     document.getElementById("signupResult").innerHTML = "Create User Failed: " + jsonObject.error;
                     return;
                 }
+                document.getElementById("newUser-form").reset();
             }
         };
         xhr.send(jsonPayload);
@@ -218,11 +219,7 @@ async function createEventAdmin(){
         .then(text => {
             console.log("📦 Raw response:", text);
             const data = JSON.parse(text);
-            if (data.result == "success") {
-                alert("✅ Event created successfully!");
-            } else {
-                alert("❌ Failed: " + data.result);
-            }
+            document.getElementById("event-form").reset();
         })
         .catch(err => console.error("❌ Error creating event:", err));
 
