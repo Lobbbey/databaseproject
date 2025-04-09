@@ -427,7 +427,19 @@ async function loadEventComments(eventID, containerId, userID) {
             }
         });
 }
-
+function deleteComment(commentID) {
+    fetch("/api/Comment/deleteComment.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ Comment_ID: commentID })
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log("Comment deleted:", data);
+            loadEventComments(data.Event_ID, `comments-${data.Event_ID}`, data.User_ID);
+        })
+        .catch(err => console.error("Failed to delete comment:", err));
+}
 async function getUserName(User_ID){
     try {
         const response = await fetch("/api/User/getUserName.php", {
