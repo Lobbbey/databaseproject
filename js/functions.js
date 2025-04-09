@@ -356,12 +356,12 @@ function loadPublicEvents() {
         .then(res => res.json())
         .then(data => {
             const pubEvents = data.public_events || [];
-            displayEvents(pubEvents, "public-events");
+            displayEvents(pubEvents, "public-events", userID);
         })
         .catch(err => console.error("Failed to load public events:", err));
 }
 
-function displayEvents(events, containerId) {
+function displayEvents(events, containerId, userID) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
@@ -388,11 +388,11 @@ function displayEvents(events, containerId) {
         commentsContainer.id = `comments-${event.Event_ID}`;
         commentsContainer.className = "comments-container";
         card.appendChild(commentsContainer);
-        loadEventComments(event.Event_ID, `comments-${event.Event_ID}`);
+        loadEventComments(event.Event_ID, `comments-${event.Event_ID}`, userID);
     });
 }
 
-async function loadEventComments(eventID, containerId) {
+async function loadEventComments(eventID, containerId, userID) {
     console.log("Loading comments for event ID:", eventID);
 
     fetch("/api/Comment/getComments.php", {
