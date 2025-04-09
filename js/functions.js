@@ -432,42 +432,65 @@ function editComment(commentID) {
     const commentCard = document.querySelector(`[data-comment-id="${commentID}"]`);
     if (!commentCard) return;
 
-    const commentText = commentCard.querySelector("p").innerText;
-    const editInput = document.createElement("input");
-    editInput.type = "text";
-    editInput.value = commentText;
-    commentCard.innerHTML = ""; // Clear the card content
-    commentCard.appendChild(editInput);
+    // Get the current comment text
+    const currentText = commentCard.querySelector("p").textContent;
 
-    const saveButton = document.createElement("button");
-    saveButton.innerText = "Save";
-    saveButton.className = "btn";
-    saveButton.onclick = () => saveComment(commentID, editInput.value, commentCard);
-    commentCard.appendChild(saveButton);
+    // Replace the comment text with a text field and save button
+    commentCard.innerHTML = `
+        <textarea class="edit-textarea">${currentText}</textarea>
+        <button class="btn save-btn" onclick="saveComment(${commentID})">Save</button>
+        <button class="btn cancel-btn" onclick="cancelEdit(${commentID}, '${currentText}')">Cancel</button>
+    `;
 }
-function saveComment(commentID, newText, commentCard) {
-    fetch("/api/Comment/editComment.php", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ Comment_ID: commentID, CommentText: newText })
-    })
-        .then(res => res.json())
-        .then(data => {
-            console.log("Comment updated:", data);
+
+async function saveComment(commentID) {
+    const commentCard = document.querySelector(`[data-comment-id="${commentID}"]`);
+    if (!commentCard) return;
+
+    // Get the updated comment text
+    const updatedText = commentCard.querySelector(".edit-textarea").value;
+
+    try {
+        // Send the updated comment to the server
+        const response = await fetch("/api/Comment/editComment.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ Comment_ID: commentID, Comment_Text: updatedText })
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            // Update the UI with the new comment text
             commentCard.innerHTML = `
-                <div class='font-bold'>${data.UserName}</div>
-                <p>${newText}</p>
-                <p><strong>Time:</strong> ${data.Timestamp}</p>
+                <div class='font-bold'>${await getUserName(data.User_ID)}</div>
+                <p>${updatedText}</p>
+                <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+                <button class="btn" onclick="deleteComment(${commentID})">Delete</button>
+                <button class="btn" onclick="editComment(${commentID})">Edit</button>
             `;
-            const deleteButton = document.createElement("button");
-            deleteButton.innerText = "Delete";
-            deleteButton.className = "btn";
-            deleteButton.onclick = () => deleteComment(commentID);
-            commentCard.appendChild(deleteButton);
-        })
-        .catch(err => console.error("Failed to update comment:", err));
+        } else {
+            console.error("Failed to edit comment:", data.error);
+        }
+    } catch (err) {
+        console.error("Failed to save comment:", err);
+    }
 }
+async function cancelEdit(commentID, originalText) {
+    const commentCard = document.querySelector(`[data-comment-id="${commentID}"]`);
+    if (!commentCard) return;
 
+    // Fetch the user name asynchronously
+    const userName = await getUserName(commentID);
+
+    // Revert the UI to the original comment text
+    commentCard.innerHTML = `
+        <div class='font-bold'>${userName}</div>
+        <p>${originalText}</p>
+        <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+        <button class="btn" onclick="deleteComment(${commentID})">Delete</button>
+        <button class="btn" onclick="editComment(${commentID})">Edit</button>
+    `;
+}
 
 
 function deleteComment(commentID) {
