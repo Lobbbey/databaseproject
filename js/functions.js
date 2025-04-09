@@ -332,7 +332,7 @@ async function loadRSOEvents(uid) {
         .then(res => res.json())
         .then(data => {
             const rEvents = data.rEvents || [];
-            displayEvents(rEvents, "rso-events", userID);
+            displayEvents(rEvents, "rso-events", uid);
         })
         .catch(err => console.error("❌ Failed to load RSO events:", err));
 }
@@ -351,7 +351,7 @@ function loadPrivateEvents(userID) {
         .catch(err => console.error("Failed to load private events:", err));
 }
 
-function loadPublicEvents() {
+function loadPublicEvents(userID) {
     fetch("/api/Event/getPublicEvents.php")
         .then(res => res.json())
         .then(data => {
