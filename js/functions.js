@@ -428,7 +428,7 @@ async function loadEventComments(eventID, containerId, userID) {
         });
 }
 function deleteComment(commentID) {
-    fetch("/api/Comment/deleteComment.php", {
+    fetch("/api/Comment/deleteComments.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ Comment_ID: commentID })
