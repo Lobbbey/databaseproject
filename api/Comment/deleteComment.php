@@ -24,7 +24,14 @@ $findComment->bind_param("i", $CommentID);
 $findComment->execute();
 $findCommentResult = $findComment->get_result();
 
-$comment = $findCommentResult->fetch_assoc()["Event_ID", "User_ID"] ?? null;
+$comment = $findCommentResult->fetch_assoc();
+if ($comment) {
+    $eventID = $comment["Event_ID"];
+    $userID = $comment["User_ID"];
+} else {
+    echo json_encode(["error" => "Comment not found."]);
+    exit();
+}
 $findComment->close();
 
 $deleteComment = $conn->prepare("
@@ -32,5 +39,10 @@ $deleteComment = $conn->prepare("
 $deleteComment->bind_param("i", $CommentID);
 $deleteComment->execute();
 $deleteComment->close();
-echo json_encode(["comment" => $comment]);
+
+echo json_encode([
+    "Event_ID" => $eventID,
+    "User_ID" => $userID,
+    "success" => true
+]);
 $conn->close();
