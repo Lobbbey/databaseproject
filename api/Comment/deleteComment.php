@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 }
 $deletedComment = null;
 $findComment = $conn->prepare("
-    Select Event_ID, User_ID FROM Comments WHERE Comment_ID = ?");
+    Select Event_ID, User_ID FROM Comments WHERE CommentID = ?");
 $findComment->bind_param("i", $CommentID);
 $findComment->execute();
 $findCommentResult = $findComment->get_result();
