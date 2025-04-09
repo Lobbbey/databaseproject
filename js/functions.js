@@ -419,6 +419,10 @@ async function loadEventComments(eventID, containerId) {
             <p>${comment.CommentText}</p>
             <p><strong>Time:</strong> ${comment.Timestamp}</p>
             `;
+            if (comment.User_ID == userID) {
+                commentCard.innerHTML += `<button class="btn" onclick="deleteComment(${comment.Comment_ID})">Delete</button>`;
+                commentCard.innerHTML += `<button class="btn" onclick="editComment(${comment.Comment_ID})">Edit</button>`;
+            }
                 commentsContainer.appendChild(commentCard);
             })
             if (comments.length === 0) {
